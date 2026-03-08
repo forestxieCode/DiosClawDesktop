@@ -67,7 +67,7 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ task, onRequestDelete }) => {
   const valueClass = 'text-sm dark:text-dark-text text-text-primary';
 
   return (
-    <div className="p-4 space-y-4 max-w-2xl mx-auto">
+    <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

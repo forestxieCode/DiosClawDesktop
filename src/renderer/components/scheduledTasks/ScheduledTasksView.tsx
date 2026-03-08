@@ -88,8 +88,8 @@ const ScheduledTasksView: React.FC<ScheduledTasksViewProps> = ({
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="app-topbar">
-        <div className="app-topbar-inner">
-          <div className="flex items-center space-x-3 h-8">
+        <div className="app-topbar-inner !px-2 md:!px-3">
+          <div className="flex items-center space-x-3 h-8 pl-3">
             {isSidebarCollapsed && (
               <div className={`non-draggable flex items-center gap-1 ${isMac ? 'pl-[68px]' : ''}`}>
                 <button
@@ -130,74 +130,78 @@ const ScheduledTasksView: React.FC<ScheduledTasksViewProps> = ({
 
       {/* Tabs */}
       {showTabs && (
-        <div className="app-tabs-bar">
-          <div className="flex">
+        <div className="app-tabs-bar px-0">
+          <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-2 md:px-3">
+            <div className="flex">
+              <button
+                type="button"
+                onClick={() => handleTabChange('tasks')}
+                className={`app-tab ${
+                  activeTab === 'tasks'
+                    ? 'app-tab-active'
+                    : 'app-tab-inactive'
+                } !px-3`}
+              >
+                {i18nService.t('scheduledTasksTabTasks')}
+              </button>
+              <button
+                type="button"
+                onClick={() => handleTabChange('history')}
+                className={`app-tab ${
+                  activeTab === 'history'
+                    ? 'app-tab-active'
+                    : 'app-tab-inactive'
+                } !px-3`}
+              >
+                {i18nService.t('scheduledTasksTabHistory')}
+              </button>
+            </div>
             <button
               type="button"
-              onClick={() => handleTabChange('tasks')}
-              className={`app-tab ${
-                activeTab === 'tasks'
-                  ? 'app-tab-active'
-                  : 'app-tab-inactive'
-              }`}
+              onClick={handleCreateTask}
+              className="app-primary-btn h-7 gap-1 px-2.5 text-xs"
             >
-              {i18nService.t('scheduledTasksTabTasks')}
-            </button>
-            <button
-              type="button"
-              onClick={() => handleTabChange('history')}
-              className={`app-tab ${
-                activeTab === 'history'
-                  ? 'app-tab-active'
-                  : 'app-tab-inactive'
-              }`}
-            >
-              {i18nService.t('scheduledTasksTabHistory')}
+              <PlusIcon className="h-3.5 w-3.5" />
+              {i18nService.t('scheduledTasksNewTask')}
             </button>
           </div>
-          <button
-            type="button"
-            onClick={handleCreateTask}
-            className="app-primary-btn h-7 gap-1 px-2.5 text-xs"
-          >
-            <PlusIcon className="h-3.5 w-3.5" />
-            {i18nService.t('scheduledTasksNewTask')}
-          </button>
         </div>
       )}
 
       {/* Content */}
       <div className="app-view-scroll">
-        {showTabs && activeTab === 'history' ? (
-          <AllRunsHistory />
-        ) : (
-          <>
-            {viewMode === 'list' && (
-              <TaskList
-                onRequestDelete={handleRequestDelete}
-                onCreateTask={handleCreateTask}
-              />
-            )}
-            {viewMode === 'create' && (
-              <TaskForm
-                mode="create"
-                onCancel={handleBackToList}
-                onSaved={handleBackToList}
-              />
-            )}
-            {viewMode === 'edit' && selectedTask && (
-              <TaskForm
-                mode="edit"
-                task={selectedTask}
-                onCancel={() => dispatch(setViewMode('detail'))}
-                onSaved={() => dispatch(setViewMode('detail'))}
-              />
-            )}
-            {viewMode === 'detail' && selectedTask && (
-              <TaskDetail task={selectedTask} onRequestDelete={handleRequestDelete} />
-            )}
-          </>
-        )}
+        <div className="mx-auto w-full max-w-5xl px-2 md:px-3 py-5 md:py-6">
+          {showTabs && activeTab === 'history' ? (
+            <AllRunsHistory />
+          ) : (
+            <>
+              {viewMode === 'list' && (
+                <TaskList
+                  onRequestDelete={handleRequestDelete}
+                  onCreateTask={handleCreateTask}
+                />
+              )}
+              {viewMode === 'create' && (
+                <TaskForm
+                  mode="create"
+                  onCancel={handleBackToList}
+                  onSaved={handleBackToList}
+                />
+              )}
+              {viewMode === 'edit' && selectedTask && (
+                <TaskForm
+                  mode="edit"
+                  task={selectedTask}
+                  onCancel={() => dispatch(setViewMode('detail'))}
+                  onSaved={() => dispatch(setViewMode('detail'))}
+                />
+              )}
+              {viewMode === 'detail' && selectedTask && (
+                <TaskDetail task={selectedTask} onRequestDelete={handleRequestDelete} />
+              )}
+            </>
+          )}
+        </div>
       </div>
 
       {/* Delete confirmation modal */}

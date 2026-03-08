@@ -64,7 +64,7 @@ const AllRunsHistory: React.FC = () => {
   }
 
   return (
-    <div className="px-4 py-3 space-y-2">
+    <div className="space-y-2">
       {/* Column Headers */}
       <div className="grid grid-cols-[1.1fr_1fr_120px] items-center gap-3 px-3 py-1">
         <div className="text-xs font-semibold tracking-wide dark:text-dark-text-secondary text-text-secondary">

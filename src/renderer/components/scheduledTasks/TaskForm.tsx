@@ -189,7 +189,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
   const scheduleModes: ScheduleMode[] = ['once', 'daily', 'weekly', 'monthly'];
 
   return (
-    <div className="px-4 py-5 md:px-6 md:py-6 space-y-5 max-w-3xl mx-auto">
+    <div className="space-y-5">
       <div className="rounded-2xl border dark:border-dark-border/70 border-border/70 dark:bg-dark-surface/40 bg-surface-hover/35 px-4 py-3">
         <h2 className="text-lg font-semibold dark:text-dark-text text-text-primary">
           {mode === 'create' ? i18nService.t('scheduledTasksFormCreate') : i18nService.t('scheduledTasksFormUpdate')}
@@ -412,7 +412,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
       </div>
 
       {/* Actions */}
-      <div className="sticky bottom-0 z-10 -mx-4 px-4 py-3 md:-mx-6 md:px-6 border-t dark:border-dark-border/70 border-border/70 dark:bg-dark-bg/95 bg-page/95 backdrop-blur-sm flex items-center justify-end gap-3">
+      <div className="sticky bottom-0 z-10 border-t dark:border-dark-border/70 border-border/70 dark:bg-dark-bg/95 bg-page/95 backdrop-blur-sm py-3 flex items-center justify-end gap-3">
         <button
           type="button"
           onClick={onCancel}
