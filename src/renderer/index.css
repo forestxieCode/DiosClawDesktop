@@ -20,7 +20,7 @@
 
 /* Improve code block styles */
 pre {
-  @apply dark:bg-claude-darkSurface bg-claude-surfaceHover;
+  @apply dark:bg-dark-surface bg-surface-hover;
   border-radius: 0.75rem !important;
   padding: 1em !important;
   margin: 1em 0 !important;
@@ -39,18 +39,18 @@ table {
 }
 
 th, td {
-  @apply dark:border-claude-darkBorder border-claude-border;
+  @apply dark:border-dark-border border-border;
   padding: 0.5em;
 }
 
 th {
-  @apply dark:bg-claude-darkSurface/50 bg-claude-surfaceHover/50;
+  @apply dark:bg-dark-surface/50 bg-surface-hover/50;
   font-weight: bold;
 }
 
 /* Style for blockquotes */
 blockquote {
-  @apply dark:border-claude-accent border-claude-accent dark:text-claude-darkTextSecondary text-claude-textSecondary;
+  @apply dark:border-primary border-primary dark:text-dark-text-secondary text-text-secondary;
   border-left-width: 3px;
   padding-left: 1em;
   font-style: italic;
@@ -63,7 +63,7 @@ blockquote {
 }
 
 :root {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 1.6;
   font-weight: 400;
 
@@ -73,18 +73,18 @@ blockquote {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Cold modern dark mode */
+/* Ink Blue dark mode */
 .dark {
   color-scheme: dark;
   color: #E4E5E9;
   background-color: #0F1117;
 }
 
-/* Cold modern light mode */
+/* Ink Blue light mode */
 .light {
   color-scheme: light;
-  color: #1A1D23;
-  background-color: #F8F9FB;
+  color: #1F2329;
+  background-color: #F5F5F7;
 }
 
 /* Ensure all containers inherit theme */
@@ -98,8 +98,8 @@ blockquote {
 .light #root,
 .light .App,
 .light main {
-  background-color: #F8F9FB;
-  color: #1A1D23;
+  background-color: #F5F5F7;
+  color: #1F2329;
 }
 
 body {
@@ -122,12 +122,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply dark:bg-claude-darkBorder bg-claude-border;
+  @apply dark:bg-dark-border bg-border;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply dark:bg-claude-darkTextSecondary bg-claude-textSecondary;
+  @apply dark:bg-dark-text-secondary bg-text-secondary;
 }
 
 /* Style for select options to match theme */
@@ -138,7 +138,7 @@ body {
 
 .light option {
   background-color: #FFFFFF;
-  color: #1A1D23;
+  color: #1F2329;
 }
 
 /* Ensure select elements have proper styling in Firefox */
@@ -172,16 +172,16 @@ select::-ms-expand {
 
 /* Focus ring */
 .focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-claude-accent focus:ring-offset-2 dark:focus:ring-offset-claude-darkBg focus:ring-offset-claude-bg;
+  @apply focus:outline-none focus:ring-2 focus:ring-primary-lighter focus:ring-offset-2 dark:focus:ring-offset-dark-bg focus:ring-offset-page;
 }
 
 /* Button styles */
 .btn-primary {
-  @apply bg-claude-accent hover:bg-claude-accentHover text-white font-medium py-2 px-4 rounded-lg transition-colors;
+  @apply bg-primary hover:bg-primary-light text-white font-medium py-2 px-4 rounded-lg transition-colors;
 }
 
 .btn-secondary {
-  @apply dark:bg-claude-darkSurface bg-claude-surface dark:hover:bg-claude-darkSurfaceHover hover:bg-claude-surfaceHover dark:text-claude-darkText text-claude-text border dark:border-claude-darkBorder border-claude-border font-medium py-2 px-4 rounded-lg transition-colors;
+  @apply dark:bg-dark-surface bg-surface dark:hover:bg-dark-surface-hover hover:bg-surface-hover dark:text-dark-text text-text-primary border dark:border-dark-border border-border font-medium py-2 px-4 rounded-lg transition-colors;
 }
 
 /* Sidebar width transition - instant toggle, no animation */
@@ -191,7 +191,7 @@ select::-ms-expand {
 
 /* Subtle separator line */
 .separator {
-  @apply dark:border-claude-darkBorderLight border-claude-borderLight;
+  @apply dark:border-dark-border-light border-border-light;
   border-top-width: 1px;
 }
 
@@ -213,7 +213,7 @@ select::-ms-expand {
 
 /* Skeleton loading */
 .skeleton {
-  @apply dark:bg-claude-darkSurface bg-claude-surfaceHover rounded;
+  @apply dark:bg-dark-surface bg-surface-hover rounded;
   position: relative;
   overflow: hidden;
 }

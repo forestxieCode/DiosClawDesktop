@@ -562,7 +562,7 @@ const TodoWriteInputView: React.FC<{ items: ParsedTodoItem[] }> = ({ items }) =>
       case 'pending':
       case 'unknown':
       default:
-        return 'bg-transparent dark:border-claude-darkTextSecondary/60 border-claude-textSecondary/60';
+        return 'bg-transparent dark:border-dark-text-secondary/60 border-text-secondary/60';
     }
   };
 
@@ -579,8 +579,8 @@ const TodoWriteInputView: React.FC<{ items: ParsedTodoItem[] }> = ({ items }) =>
           <div className="min-w-0 flex-1">
             <div className={`text-xs whitespace-pre-wrap break-words leading-5 ${
               item.status === 'completed'
-                ? 'dark:text-claude-darkTextSecondary/70 text-claude-textSecondary/80'
-                : 'dark:text-claude-darkText text-claude-text'
+                ? 'dark:text-dark-text-secondary/70 text-text-secondary/80'
+                : 'dark:text-dark-text text-text-primary'
             }`}>
               {item.primaryText}
             </div>
@@ -623,7 +623,7 @@ const ToolCallGroup: React.FC<{
     <div className="relative py-1">
       {/* Vertical connecting line to next tool group */}
       {!isLastInSequence && (
-        <div className="absolute left-[3.5px] top-[14px] bottom-[-8px] w-px dark:bg-claude-darkTextSecondary/30 bg-claude-textSecondary/30" />
+        <div className="absolute left-[3.5px] top-[14px] bottom-[-8px] w-px dark:bg-dark-text-secondary/30 bg-text-secondary/30" />
       )}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
@@ -638,22 +638,22 @@ const ToolCallGroup: React.FC<{
         }`} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-sm font-medium dark:text-claude-darkTextSecondary text-claude-textSecondary">
+            <span className="text-sm font-medium dark:text-dark-text-secondary text-text-secondary">
               {toolName}
             </span>
             {toolInputSummary && (
-              <code className="text-xs dark:text-claude-darkTextSecondary/80 text-claude-textSecondary/80 font-mono truncate max-w-[400px]">
+              <code className="text-xs dark:text-dark-text-secondary/80 text-text-secondary/80 font-mono truncate max-w-[400px]">
                 {toolInputSummary}
               </code>
             )}
           </div>
           {toolResult && resultLineCount > 0 && !isTodoWriteTool && (
-            <div className="text-xs dark:text-claude-darkTextSecondary/60 text-claude-textSecondary/60 mt-0.5">
+            <div className="text-xs dark:text-dark-text-secondary/60 text-text-secondary/60 mt-0.5">
               {resultLineCount} {resultLineCount === 1 ? 'line' : 'lines'} of output
             </div>
           )}
           {!toolResult && (
-            <div className="text-xs dark:text-claude-darkTextSecondary/60 text-claude-textSecondary/60 mt-0.5">
+            <div className="text-xs dark:text-dark-text-secondary/60 text-text-secondary/60 mt-0.5">
               {i18nService.t('coworkToolRunning')}
             </div>
           )}
@@ -663,31 +663,31 @@ const ToolCallGroup: React.FC<{
         <div className="ml-4 mt-2">
           {isBashTool ? (
             // Terminal-style display for Bash commands
-            <div className="rounded-lg overflow-hidden border dark:border-claude-darkBorder border-claude-border">
+            <div className="rounded-lg overflow-hidden border dark:border-dark-border border-border">
               {/* Terminal header */}
-              <div className="flex items-center gap-1.5 px-3 py-1.5 dark:bg-claude-darkSurface bg-claude-surfaceInset">
+              <div className="flex items-center gap-1.5 px-3 py-1.5 dark:bg-dark-surface bg-surface-inset">
                 <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
                 <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
                 <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
-                <span className="ml-2 text-[10px] dark:text-claude-darkTextSecondary text-claude-textSecondary font-medium">Terminal</span>
+                <span className="ml-2 text-[10px] dark:text-dark-text-secondary text-text-secondary font-medium">Terminal</span>
               </div>
               {/* Terminal content */}
-              <div className="dark:bg-claude-darkSurfaceInset bg-claude-surfaceInset px-3 py-3 max-h-72 overflow-y-auto font-mono text-xs">
+              <div className="dark:bg-dark-surface-inset bg-surface-inset px-3 py-3 max-h-72 overflow-y-auto font-mono text-xs">
                 {toolInputDisplay && (
-                  <div className="dark:text-claude-darkText text-claude-text">
-                    <span className="text-claude-accent select-none">$ </span>
+                  <div className="dark:text-dark-text text-text-primary">
+                    <span className="text-primary select-none">$ </span>
                     <span className="whitespace-pre-wrap break-words">{toolInputDisplay}</span>
                   </div>
                 )}
                 {toolResult && toolResultDisplay && (
                   <div className={`mt-1.5 whitespace-pre-wrap break-words ${
-                    isToolError ? 'text-red-400' : 'dark:text-claude-darkTextSecondary text-claude-textSecondary'
+                    isToolError ? 'text-red-400' : 'dark:text-dark-text-secondary text-text-secondary'
                   }`}>
                     {toolResultDisplay}
                   </div>
                 )}
                 {!toolResult && (
-                  <div className="dark:text-claude-darkTextSecondary/60 text-claude-textSecondary/60 mt-1.5 italic">
+                  <div className="dark:text-dark-text-secondary/60 text-text-secondary/60 mt-1.5 italic">
                     {i18nService.t('coworkToolRunning')}
                   </div>
                 )}
@@ -700,11 +700,11 @@ const ToolCallGroup: React.FC<{
             <div className="space-y-2">
               {toolInputDisplay && (
                 <div>
-                  <div className="text-[10px] font-medium dark:text-claude-darkTextSecondary/70 text-claude-textSecondary/70 uppercase tracking-wider mb-1">
+                  <div className="text-[10px] font-medium dark:text-dark-text-secondary/70 text-text-secondary/70 uppercase tracking-wider mb-1">
                     {i18nService.t('coworkToolInput')}
                   </div>
                   <div className="max-h-48 overflow-y-auto">
-                    <pre className="text-xs dark:text-claude-darkText text-claude-text whitespace-pre-wrap break-words font-mono">
+                    <pre className="text-xs dark:text-dark-text text-text-primary whitespace-pre-wrap break-words font-mono">
                       {toolInputDisplay}
                     </pre>
                   </div>
@@ -712,12 +712,12 @@ const ToolCallGroup: React.FC<{
               )}
               {toolResult && (
                 <div>
-                  <div className="text-[10px] font-medium dark:text-claude-darkTextSecondary/70 text-claude-textSecondary/70 uppercase tracking-wider mb-1">
+                  <div className="text-[10px] font-medium dark:text-dark-text-secondary/70 text-text-secondary/70 uppercase tracking-wider mb-1">
                     {i18nService.t('coworkToolResult')}
                   </div>
                   <div className="max-h-64 overflow-y-auto">
                     <pre className={`text-xs whitespace-pre-wrap break-words font-mono ${
-                      isToolError ? 'text-red-500' : 'dark:text-claude-darkText text-claude-text'
+                      isToolError ? 'text-red-500' : 'dark:text-dark-text text-text-primary'
                     }`}>
                       {toolResultDisplay}
                     </pre>
@@ -753,7 +753,7 @@ const CopyButton: React.FC<{
   return (
     <button
       onClick={handleCopy}
-      className={`p-1.5 rounded-md dark:hover:bg-claude-darkSurfaceHover hover:bg-claude-surfaceHover transition-all duration-200 ${
+      className={`p-1.5 rounded-md dark:hover:bg-dark-surface-hover hover:bg-surface-hover transition-all duration-200 ${
         visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
       title={i18nService.t('copyToClipboard')}
@@ -819,7 +819,7 @@ const UserMessageItem: React.FC<{ message: CoworkMessage; skills: Skill[] }> = R
         <div className="pl-4 sm:pl-8 md:pl-12">
           <div className="flex items-start gap-3 flex-row-reverse">
             <div className="w-full min-w-0 flex flex-col items-end">
-              <div className="w-fit max-w-[42rem] rounded-2xl px-4 py-2.5 dark:bg-claude-darkSurface bg-claude-surface dark:text-claude-darkText text-claude-text shadow-subtle">
+              <div className="w-fit max-w-[42rem] rounded-2xl px-4 py-2.5 dark:bg-dark-surface bg-surface dark:text-dark-text text-text-primary shadow-subtle">
                 {message.content?.trim() && (
                   <MarkdownContent
                     content={message.content}
@@ -833,7 +833,7 @@ const UserMessageItem: React.FC<{ message: CoworkMessage; skills: Skill[] }> = R
                         <img
                           src={`data:${img.mimeType};base64,${img.base64Data}`}
                           alt={img.name}
-                          className="max-h-48 max-w-[16rem] rounded-lg object-contain cursor-pointer border dark:border-claude-darkBorder/50 border-claude-border/50 hover:border-claude-accent/50 transition-colors"
+                          className="max-h-48 max-w-[16rem] rounded-lg object-contain cursor-pointer border dark:border-dark-border/50 border-border/50 hover:border-primary/50 transition-colors"
                           title={img.name}
                           onClick={() => setExpandedImage(`data:${img.mimeType};base64,${img.base64Data}`)}
                         />
@@ -850,11 +850,11 @@ const UserMessageItem: React.FC<{ message: CoworkMessage; skills: Skill[] }> = R
                 {messageSkills.map(skill => (
                   <div
                     key={skill.id}
-                    className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-claude-accent/5 dark:bg-claude-accent/10"
+                    className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-primary/5 dark:bg-primary/10"
                     title={skill.description}
                   >
-                    <PuzzleIcon className="h-2.5 w-2.5 text-claude-accent/70" />
-                    <span className="text-[10px] font-medium text-claude-accent/70 max-w-[60px] truncate">
+                    <PuzzleIcon className="h-2.5 w-2.5 text-primary/70" />
+                    <span className="text-[10px] font-medium text-primary/70 max-w-[60px] truncate">
                       {skill.name}
                     </span>
                   </div>
@@ -906,7 +906,7 @@ const AssistantMessageItem: React.FC<{
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="dark:text-claude-darkText text-claude-text">
+      <div className="dark:text-dark-text text-text-primary">
         <MarkdownContent
           content={displayContent}
           className="prose dark:prose-invert max-w-none"
@@ -959,7 +959,7 @@ const StreamingActivityBar: React.FC<{ messages: CoworkMessage[] }> = ({ message
       <div className="max-w-3xl mx-auto">
         <div className="streaming-bar" />
         <div className="py-1">
-          <span className="text-xs dark:text-claude-darkTextSecondary text-claude-textSecondary">
+          <span className="text-xs dark:text-dark-text-secondary text-text-secondary">
             {getStatusText()}
           </span>
         </div>
@@ -970,9 +970,9 @@ const StreamingActivityBar: React.FC<{ messages: CoworkMessage[] }> = ({ message
 
 const TypingDots: React.FC = () => (
   <div className="flex items-center space-x-1.5 py-1">
-    <div className="w-2 h-2 rounded-full bg-claude-accent animate-bounce" style={{ animationDelay: '0ms' }} />
-    <div className="w-2 h-2 rounded-full bg-claude-accent animate-bounce" style={{ animationDelay: '150ms' }} />
-    <div className="w-2 h-2 rounded-full bg-claude-accent animate-bounce" style={{ animationDelay: '300ms' }} />
+    <div className="w-2 h-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: '0ms' }} />
+    <div className="w-2 h-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: '150ms' }} />
+    <div className="w-2 h-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: '300ms' }} />
   </div>
 );
 
@@ -994,26 +994,26 @@ const ThinkingBlock: React.FC<{
   }, [isCurrentlyStreaming]);
 
   return (
-    <div className="rounded-lg border dark:border-claude-darkBorder/50 border-claude-border/50 overflow-hidden">
+    <div className="rounded-lg border dark:border-dark-border/50 border-border/50 overflow-hidden">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center gap-2 px-3 py-2 text-left dark:hover:bg-claude-darkSurfaceHover/50 hover:bg-claude-surfaceHover/50 transition-colors"
+        className="w-full flex items-center gap-2 px-3 py-2 text-left dark:hover:bg-dark-surface-hover/50 hover:bg-surface-hover/50 transition-colors"
       >
         <ChevronRightIcon
-          className={`h-3.5 w-3.5 dark:text-claude-darkTextSecondary text-claude-textSecondary flex-shrink-0 transition-transform duration-200 ${
+          className={`h-3.5 w-3.5 dark:text-dark-text-secondary text-text-secondary flex-shrink-0 transition-transform duration-200 ${
             isExpanded ? 'rotate-90' : ''
           }`}
         />
-        <span className="text-xs font-medium dark:text-claude-darkTextSecondary text-claude-textSecondary">
+        <span className="text-xs font-medium dark:text-dark-text-secondary text-text-secondary">
           {i18nService.t('reasoning')}
         </span>
         {isCurrentlyStreaming && (
-          <span className="w-1.5 h-1.5 rounded-full bg-claude-accent animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
         )}
       </button>
       {isExpanded && (
         <div className="px-3 pb-3 max-h-64 overflow-y-auto">
-          <div className="text-xs leading-relaxed dark:text-claude-darkTextSecondary/80 text-claude-textSecondary/80 whitespace-pre-wrap">
+          <div className="text-xs leading-relaxed dark:text-dark-text-secondary/80 text-text-secondary/80 whitespace-pre-wrap">
             {displayContent}
           </div>
         </div>
@@ -1045,10 +1045,10 @@ const AssistantTurnBlock: React.FC<{
     if (!content.trim()) return null;
 
     return (
-      <div className="rounded-lg border dark:border-claude-darkBorder/70 border-claude-border/70 dark:bg-claude-darkBg/40 bg-claude-bg/60 px-3 py-2">
+      <div className="rounded-lg border dark:border-dark-border/70 border-border/70 dark:bg-dark-bg/40 bg-page/60 px-3 py-2">
         <div className="flex items-start gap-2">
-          <InformationCircleIcon className="h-4 w-4 mt-0.5 dark:text-claude-darkTextSecondary text-claude-textSecondary flex-shrink-0" />
-          <div className="text-xs whitespace-pre-wrap dark:text-claude-darkTextSecondary text-claude-textSecondary">
+          <InformationCircleIcon className="h-4 w-4 mt-0.5 dark:text-dark-text-secondary text-text-secondary flex-shrink-0" />
+          <div className="text-xs whitespace-pre-wrap dark:text-dark-text-secondary text-text-secondary">
             {content}
           </div>
         </div>
@@ -1065,20 +1065,20 @@ const AssistantTurnBlock: React.FC<{
       <div className="py-1">
         <div className="flex items-start gap-2">
           <span className={`mt-1.5 w-2 h-2 rounded-full flex-shrink-0 ${
-            isToolError ? 'bg-red-500' : 'bg-claude-darkTextSecondary/50'
+            isToolError ? 'bg-red-500' : 'bg-dark-text-secondary/50'
           }`} />
           <div className="flex-1 min-w-0">
-            <div className="text-sm font-medium dark:text-claude-darkTextSecondary text-claude-textSecondary">
+            <div className="text-sm font-medium dark:text-dark-text-secondary text-text-secondary">
               {i18nService.t('coworkToolResult')}
             </div>
             {resultLineCount > 0 && (
-              <div className="text-xs dark:text-claude-darkTextSecondary/60 text-claude-textSecondary/60 mt-0.5">
+              <div className="text-xs dark:text-dark-text-secondary/60 text-text-secondary/60 mt-0.5">
                 {resultLineCount} {resultLineCount === 1 ? 'line' : 'lines'} of output
               </div>
             )}
-            <div className="mt-2 px-3 py-2 rounded-lg dark:bg-claude-darkSurface/50 bg-claude-surface/50 max-h-64 overflow-y-auto">
+            <div className="mt-2 px-3 py-2 rounded-lg dark:bg-dark-surface/50 bg-surface/50 max-h-64 overflow-y-auto">
               <pre className={`text-xs whitespace-pre-wrap break-words font-mono ${
-                isToolError ? 'text-red-500' : 'dark:text-claude-darkText text-claude-text'
+                isToolError ? 'text-red-500' : 'dark:text-dark-text text-text-primary'
               }`}>
                 {toolResultDisplay || i18nService.t('coworkToolRunning')}
               </pre>
@@ -1649,9 +1649,9 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
   };
 
   return (
-    <div ref={detailRootRef} className="flex-1 flex flex-col dark:bg-claude-darkBg bg-claude-bg h-full">
+    <div ref={detailRootRef} className="flex-1 flex flex-col dark:bg-dark-bg bg-page h-full">
       {/* Header */}
-      <div className="draggable flex h-12 items-center justify-between px-4 border-b dark:border-claude-darkBorder border-claude-border dark:bg-claude-darkSurface/50 bg-claude-surface/50 shrink-0">
+      <div className="draggable flex h-12 items-center justify-between px-4 border-b dark:border-dark-border border-border dark:bg-dark-surface/50 bg-surface/50 shrink-0">
         {/* Left side: Toggle buttons (when collapsed) + Title + Sandbox badge */}
         <div className="flex h-full items-center gap-2 min-w-0">
           {isSidebarCollapsed && (
@@ -1659,14 +1659,14 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
               <button
                 type="button"
                 onClick={onToggleSidebar}
-                className="h-8 w-8 inline-flex items-center justify-center rounded-lg dark:text-claude-darkTextSecondary text-claude-textSecondary hover:bg-claude-surfaceHover dark:hover:bg-claude-darkSurfaceHover transition-colors"
+                className="h-8 w-8 inline-flex items-center justify-center rounded-lg dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
               >
                 <SidebarToggleIcon className="h-4 w-4" isCollapsed={true} />
               </button>
               <button
                 type="button"
                 onClick={onNewChat}
-                className="h-8 w-8 inline-flex items-center justify-center rounded-lg dark:text-claude-darkTextSecondary text-claude-textSecondary hover:bg-claude-surfaceHover dark:hover:bg-claude-darkSurfaceHover transition-colors"
+                className="h-8 w-8 inline-flex items-center justify-center rounded-lg dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
               >
                 <ComposeIcon className="h-4 w-4" />
               </button>
@@ -1688,10 +1688,10 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
                 }
               }}
               onBlur={handleRenameBlur}
-              className="non-draggable min-w-0 max-w-[300px] rounded-lg border dark:border-claude-darkBorder border-claude-border dark:bg-claude-darkBg bg-claude-bg px-2 py-1 text-sm font-medium dark:text-claude-darkText text-claude-text focus:outline-none focus:ring-2 focus:ring-claude-accent"
+              className="non-draggable min-w-0 max-w-[300px] rounded-lg border dark:border-dark-border border-border dark:bg-dark-bg bg-page px-2 py-1 text-sm font-medium dark:text-dark-text text-text-primary focus:outline-none focus:ring-2 focus:ring-primary"
             />
           ) : (
-            <h1 className="text-sm leading-none font-medium dark:text-claude-darkText text-claude-text truncate max-w-[360px]">
+            <h1 className="text-sm leading-none font-medium dark:text-dark-text text-text-primary truncate max-w-[360px]">
               {currentSession.title || i18nService.t('coworkNewSession')}
             </h1>
           )}
@@ -1713,7 +1713,7 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
           <button
             type="button"
             onClick={handleOpenFolder}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm dark:text-claude-darkTextSecondary text-claude-textSecondary dark:hover:bg-claude-darkSurfaceHover hover:bg-claude-surfaceHover dark:hover:text-claude-darkText hover:text-claude-text transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm dark:text-dark-text-secondary text-text-secondary dark:hover:bg-dark-surface-hover hover:bg-surface-hover dark:hover:text-dark-text hover:text-text-primary transition-colors"
             aria-label={i18nService.t('coworkOpenFolder')}
           >
             <FolderIcon className="h-4 w-4" />
@@ -1727,7 +1727,7 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
             ref={actionButtonRef}
             type="button"
             onClick={openMenu}
-            className="p-1.5 rounded-lg dark:text-claude-darkTextSecondary text-claude-textSecondary dark:hover:bg-claude-darkSurfaceHover hover:bg-claude-surfaceHover transition-colors"
+            className="p-1.5 rounded-lg dark:text-dark-text-secondary text-text-secondary dark:hover:bg-dark-surface-hover hover:bg-surface-hover transition-colors"
             aria-label={i18nService.t('coworkSessionActions')}
           >
             <EllipsisHorizontalIcon className="h-5 w-5" />
@@ -1740,14 +1740,14 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
       {menuPosition && (
         <div
           ref={menuRef}
-          className="fixed z-50 min-w-[180px] rounded-xl border dark:border-claude-darkBorder border-claude-border dark:bg-claude-darkSurface bg-claude-surface shadow-popover popover-enter overflow-hidden"
+          className="fixed z-50 min-w-[180px] rounded-xl border dark:border-dark-border border-border dark:bg-dark-surface bg-surface shadow-popover popover-enter overflow-hidden"
           style={{ top: menuPosition.y, left: menuPosition.x }}
           role="menu"
         >
           <button
             type="button"
             onClick={handleRenameClick}
-            className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm dark:text-claude-darkText text-claude-text hover:bg-claude-surfaceHover dark:hover:bg-claude-darkSurfaceHover transition-colors"
+            className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm dark:text-dark-text text-text-primary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
           >
             <PencilSquareIcon className="h-4 w-4" />
             {i18nService.t('renameConversation')}
@@ -1755,7 +1755,7 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
           <button
             type="button"
             onClick={handleTogglePin}
-            className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm dark:text-claude-darkText text-claude-text hover:bg-claude-surfaceHover dark:hover:bg-claude-darkSurfaceHover transition-colors"
+            className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm dark:text-dark-text text-text-primary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
           >
             <PushPinIcon
               slashed={currentSession.pinned}
@@ -1767,7 +1767,7 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
             type="button"
             onClick={handleShareClick}
             disabled={isExportingImage}
-            className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm dark:text-claude-darkText text-claude-text hover:bg-claude-surfaceHover dark:hover:bg-claude-darkSurfaceHover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm dark:text-dark-text text-text-primary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ShareIcon className="h-4 w-4" />
             {i18nService.t('coworkShareSession')}
@@ -1790,7 +1790,7 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
           onClick={handleCancelDelete}
         >
           <div
-            className="w-full max-w-sm mx-4 dark:bg-claude-darkSurface bg-claude-surface rounded-2xl shadow-modal overflow-hidden modal-content"
+            className="w-full max-w-sm mx-4 dark:bg-dark-surface bg-surface rounded-2xl shadow-modal overflow-hidden modal-content"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
@@ -1798,23 +1798,23 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
               <div className="p-2 rounded-full bg-red-100 dark:bg-red-900/30">
                 <ExclamationTriangleIcon className="h-5 w-5 text-red-600 dark:text-red-500" />
               </div>
-              <h2 className="text-base font-semibold dark:text-claude-darkText text-claude-text">
+              <h2 className="text-base font-semibold dark:text-dark-text text-text-primary">
                 {i18nService.t('deleteTaskConfirmTitle')}
               </h2>
             </div>
 
             {/* Content */}
             <div className="px-5 pb-4">
-              <p className="text-sm dark:text-claude-darkTextSecondary text-claude-textSecondary">
+              <p className="text-sm dark:text-dark-text-secondary text-text-secondary">
                 {i18nService.t('deleteTaskConfirmMessage')}
               </p>
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-end gap-3 px-5 py-4 border-t dark:border-claude-darkBorder border-claude-border">
+            <div className="flex items-center justify-end gap-3 px-5 py-4 border-t dark:border-dark-border border-border">
               <button
                 onClick={handleCancelDelete}
-                className="px-4 py-2 text-sm font-medium rounded-lg dark:text-claude-darkTextSecondary text-claude-textSecondary dark:hover:bg-claude-darkSurfaceHover hover:bg-claude-surfaceHover transition-colors"
+                className="px-4 py-2 text-sm font-medium rounded-lg dark:text-dark-text-secondary text-text-secondary dark:hover:bg-dark-surface-hover hover:bg-surface-hover transition-colors"
               >
                 {i18nService.t('cancel')}
               </button>

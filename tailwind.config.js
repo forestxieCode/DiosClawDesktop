@@ -8,41 +8,40 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Cold modern color palette
-        claude: {
-          // Light mode colors
-          bg: '#F8F9FB',              // Cool gray-white background
-          surface: '#FFFFFF',          // Cards, inputs
-          surfaceHover: '#F0F1F4',     // Hover state
-          surfaceMuted: '#F3F4F6',     // Subtle area distinction
-          surfaceInset: '#EBEDF0',     // Inset areas (e.g., input inner)
-          border: '#E0E2E7',           // Default border
-          borderLight: '#EBEDF0',      // Subtle dividers
-          text: '#1A1D23',             // Primary text, near-black
-          textSecondary: '#6B7280',    // Secondary text
-          // Dark mode colors
-          darkBg: '#0F1117',           // Dark background, near-black
-          darkSurface: '#1A1D27',      // Dark cards
-          darkSurfaceHover: '#242830', // Dark hover
-          darkSurfaceMuted: '#151820', // Subtle dark area
-          darkSurfaceInset: '#0C0E14', // Dark inset areas
-          darkBorder: '#2A2E38',       // Dark borders
-          darkBorderLight: '#1F232B',  // Subtle dark dividers
-          darkText: '#E4E5E9',         // Dark primary text
-          darkTextSecondary: '#8B8FA3', // Dark secondary text
-          // Accent (tech blue)
-          accent: '#3B82F6',           // Blue primary
-          accentHover: '#2563EB',      // Blue hover
-          accentLight: '#60A5FA',      // Light blue for badges
-          accentMuted: 'rgba(59,130,246,0.10)', // Very faint blue background
-        },
+        // Ink Blue Enterprise color palette
+        page: '#F5F5F7',              // Light page bg
+        surface: '#FFFFFF',          // Cards, inputs
+        'surface-hover': '#EBEBED',     // Hover state
+        'surface-muted': '#F3F4F6',     // Subtle area distinction
+        'surface-inset': '#EBEDF0',     // Inset areas
+        border: '#E8E8EB',           // Default border
+        'border-light': '#EBEDF0',      // Subtle dividers
+        'text-primary': '#1F2329',             // Primary text
+        'text-secondary': '#646A73',    // Secondary text
+        'text-muted': '#8F959E',        // Muted text
+
+        // Dark mode colors
+        'dark-bg': '#0F1117',           // Dark background
+        'dark-surface': '#1A1D27',      // Dark cards
+        'dark-surface-hover': '#242830', // Dark hover
+        'dark-surface-muted': '#151820', // Subtle dark area
+        'dark-surface-inset': '#0C0E14', // Dark inset areas
+        'dark-border': '#2A2E38',       // Dark borders
+        'dark-border-light': '#1F232B',  // Subtle dark dividers
+        'dark-text': '#E4E5E9',         // Dark primary text
+        'dark-text-secondary': '#9CA3AF', // Dark secondary text
+        'dark-text-muted': '#8B8FA3',   // Dark muted text
+
+        // Primary (Ink Blue)
         primary: {
-          DEFAULT: '#3B82F6',
-          dark: '#2563EB'
+          DEFAULT: '#0D2847', // Deep Ink Blue
+          light: '#134E6F',   // Hover in light
+          lighter: '#1E5F7A', // Focus ring
+          muted: 'rgba(13, 40, 71, 0.10)',
         },
         secondary: {
-          DEFAULT: '#6B7280',
-          dark: '#2A2E38'
+          DEFAULT: '#646A73',
+          dark: '#9CA3AF'
         }
       },
       boxShadow: {
@@ -51,7 +50,10 @@ export default {
         elevated: '0 4px 12px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.04)',
         modal: '0 8px 30px rgba(0,0,0,0.16), 0 2px 8px rgba(0,0,0,0.08)',
         popover: '0 4px 20px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.05)',
-        'glow-accent': '0 0 20px rgba(59,130,246,0.15)',
+        focus: '0 8px 32px rgba(13, 40, 71, 0.18)',
+        'focus-dark': '0 8px 32px rgba(91, 163, 224, 0.25)',
+        'card-hover': '0 2px 12px rgba(13, 40, 71, 0.12)',
+        'card-hover-dark': '0 2px 12px rgba(91, 163, 224, 0.2)',
       },
       keyframes: {
         'fade-in': {
@@ -88,16 +90,16 @@ export default {
       typography: {
         DEFAULT: {
           css: {
-            color: '#1A1D23',
+            color: '#1F2329',
             a: {
-              color: '#3B82F6',
+              color: '#0D2847',
               '&:hover': {
-                color: '#2563EB',
+                color: '#134E6F',
               },
             },
             code: {
-              color: '#1A1D23',
-              backgroundColor: 'rgba(224, 226, 231, 0.5)',
+              color: '#1F2329',
+              backgroundColor: 'rgba(235, 237, 240, 0.5)',
               padding: '0.2em 0.4em',
               borderRadius: '0.25rem',
               fontWeight: '400',
@@ -109,30 +111,30 @@ export default {
               content: '""',
             },
             pre: {
-              backgroundColor: '#F0F1F4',
-              color: '#1A1D23',
+              backgroundColor: '#F5F5F7',
+              color: '#1F2329',
               padding: '1em',
               borderRadius: '0.75rem',
               overflowX: 'auto',
             },
             blockquote: {
-              borderLeftColor: '#3B82F6',
-              color: '#6B7280',
+              borderLeftColor: '#0D2847',
+              color: '#646A73',
             },
             h1: {
-              color: '#1A1D23',
+              color: '#1F2329',
             },
             h2: {
-              color: '#1A1D23',
+              color: '#1F2329',
             },
             h3: {
-              color: '#1A1D23',
+              color: '#1F2329',
             },
             h4: {
-              color: '#1A1D23',
+              color: '#1F2329',
             },
             strong: {
-              color: '#1A1D23',
+              color: '#1F2329',
             },
           },
         },

@@ -182,15 +182,15 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
     6: 'scheduledTasksFormWeekSat',
   };
 
-  const inputClass = 'w-full rounded-lg border dark:border-claude-darkBorder border-claude-border dark:bg-claude-darkSurface bg-white px-3 py-2 text-sm dark:text-claude-darkText text-claude-text focus:outline-none focus:ring-2 focus:ring-claude-accent/50';
-  const labelClass = 'block text-sm font-medium dark:text-claude-darkText text-claude-text mb-1';
+  const inputClass = 'w-full rounded-lg border dark:border-dark-border border-border dark:bg-dark-surface bg-white px-3 py-2 text-sm dark:text-dark-text text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50';
+  const labelClass = 'block text-sm font-medium dark:text-dark-text text-text-primary mb-1';
   const errorClass = 'text-xs text-red-500 mt-1';
 
   const scheduleModes: ScheduleMode[] = ['once', 'daily', 'weekly', 'monthly'];
 
   return (
     <div className="p-4 space-y-4 max-w-2xl mx-auto">
-      <h2 className="text-lg font-semibold dark:text-claude-darkText text-claude-text">
+      <h2 className="text-lg font-semibold dark:text-dark-text text-text-primary">
         {mode === 'create' ? i18nService.t('scheduledTasksFormCreate') : i18nService.t('scheduledTasksFormUpdate')}
       </h2>
 
@@ -307,7 +307,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
           <button
             type="button"
             onClick={handleBrowseDirectory}
-            className="px-3 py-2 text-sm rounded-lg border dark:border-claude-darkBorder border-claude-border dark:text-claude-darkTextSecondary text-claude-textSecondary hover:bg-claude-surfaceHover dark:hover:bg-claude-darkSurfaceHover transition-colors"
+            className="px-3 py-2 text-sm rounded-lg border dark:border-dark-border border-border dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
           >
             {i18nService.t('browse')}
           </button>
@@ -319,7 +319,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
       <div>
         <label className={labelClass}>
           {i18nService.t('scheduledTasksFormExpiresAt')}
-          <span className="text-xs font-normal dark:text-claude-darkTextSecondary text-claude-textSecondary ml-1">
+          <span className="text-xs font-normal dark:text-dark-text-secondary text-text-secondary ml-1">
             {i18nService.t('scheduledTasksFormOptional')}
           </span>
         </label>
@@ -335,7 +335,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
             <button
               type="button"
               onClick={() => setExpiresAt('')}
-              className="px-3 py-2 text-sm rounded-lg border dark:border-claude-darkBorder border-claude-border dark:text-claude-darkTextSecondary text-claude-textSecondary hover:bg-claude-surfaceHover dark:hover:bg-claude-darkSurfaceHover transition-colors"
+              className="px-3 py-2 text-sm rounded-lg border dark:border-dark-border border-border dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
             >
               {i18nService.t('scheduledTasksFormExpiresAtClear')}
             </button>
@@ -347,7 +347,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
       <div>
         <label className={labelClass}>
           {i18nService.t('scheduledTasksFormNotify')}
-          <span className="text-xs font-normal dark:text-claude-darkTextSecondary text-claude-textSecondary ml-1">
+          <span className="text-xs font-normal dark:text-dark-text-secondary text-text-secondary ml-1">
             {i18nService.t('scheduledTasksFormOptional')}
           </span>
         </label>
@@ -357,7 +357,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
             onClick={() => setNotifyDropdownOpen(!notifyDropdownOpen)}
             className={inputClass + ' flex items-center justify-between cursor-pointer text-left'}
           >
-            <span className={notifyPlatforms.length === 0 ? 'dark:text-claude-darkTextSecondary text-claude-textSecondary' : ''}>
+            <span className={notifyPlatforms.length === 0 ? 'dark:text-dark-text-secondary text-text-secondary' : ''}>
               {notifyPlatforms.length === 0
                 ? i18nService.t('scheduledTasksFormNotifyNone')
                 : notifyPlatforms.map((p) =>
@@ -369,13 +369,13 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
             </svg>
           </button>
           {notifyDropdownOpen && (
-            <div className="absolute z-10 mt-1 w-full rounded-lg border dark:border-claude-darkBorder border-claude-border dark:bg-claude-darkSurface bg-white shadow-lg py-1">
+            <div className="absolute z-10 mt-1 w-full rounded-lg border dark:border-dark-border border-border dark:bg-dark-surface bg-white shadow-lg py-1">
               {NOTIFY_PLATFORMS.map((platform) => {
                 const checked = notifyPlatforms.includes(platform);
                 return (
                   <label
                     key={platform}
-                    className="flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-claude-surfaceHover dark:hover:bg-claude-darkSurfaceHover transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
                   >
                     <input
                       type="checkbox"
@@ -387,9 +387,9 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
                             : [...notifyPlatforms, platform]
                         );
                       }}
-                      className="text-claude-accent focus:ring-claude-accent rounded"
+                      className="text-primary focus:ring-primary rounded"
                     />
-                    <span className="text-sm dark:text-claude-darkText text-claude-text">
+                    <span className="text-sm dark:text-dark-text text-text-primary">
                       {i18nService.t(`scheduledTasksFormNotify${platform.charAt(0).toUpperCase() + platform.slice(1)}`)}
                     </span>
                   </label>
@@ -405,7 +405,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 text-sm rounded-lg dark:text-claude-darkTextSecondary text-claude-textSecondary hover:bg-claude-surfaceHover dark:hover:bg-claude-darkSurfaceHover transition-colors"
+          className="px-4 py-2 text-sm rounded-lg dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
         >
           {i18nService.t('cancel')}
         </button>
@@ -413,7 +413,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
           type="button"
           onClick={handleSubmit}
           disabled={submitting}
-          className="px-4 py-2 text-sm font-medium bg-claude-accent text-white rounded-lg hover:bg-claude-accentHover transition-colors disabled:opacity-50"
+          className="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg hover:bg-primary-light transition-colors disabled:opacity-50"
         >
           {submitting
             ? i18nService.t('saving')
