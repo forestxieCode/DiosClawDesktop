@@ -10,6 +10,7 @@ import { SkillsView } from './components/skills';
 import { ScheduledTasksView } from './components/scheduledTasks';
 import { McpView } from './components/mcp';
 import CoworkPermissionModal from './components/cowork/CoworkPermissionModal';
+import CoworkSearchModal from './components/cowork/CoworkSearchModal';
 import CoworkQuestionWizard from './components/cowork/CoworkQuestionWizard';
 import { configService } from './services/config';
 import { apiService } from './services/api';
@@ -20,6 +21,7 @@ import { checkForAppUpdate, type AppUpdateInfo, type AppUpdateDownloadProgress, 
 import { defaultConfig } from './config';
 import { setAvailableModels, setSelectedModel } from './store/slices/modelSlice';
 import { clearSelection } from './store/slices/quickActionSlice';
+import { selectTask, setViewMode } from './store/slices/scheduledTaskSlice';
 import type { ApiConfig } from './services/api';
 import type { CoworkPermissionResult } from './types/cowork';
 import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline';
@@ -32,6 +34,7 @@ const App: React.FC = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [settingsOptions, setSettingsOptions] = useState<SettingsOpenOptions>({});
   const [mainView, setMainView] = useState<'cowork' | 'skills' | 'scheduledTasks' | 'mcp'>('cowork');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   const [initError, setInitError] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -46,6 +49,8 @@ const App: React.FC = () => {
   const hasInitialized = useRef(false);
   const dispatch = useDispatch();
   const selectedModel = useSelector((state: RootState) => state.model.selectedModel);
+  const sessions = useSelector((state: RootState) => state.cowork.sessions);
+  const scheduledTasks = useSelector((state: RootState) => state.scheduledTask.tasks);
   const currentSessionId = useSelector((state: RootState) => state.cowork.currentSessionId);
   const pendingPermissions = useSelector((state: RootState) => state.cowork.pendingPermissions);
   const pendingPermission = pendingPermissions[0] ?? null;
@@ -195,8 +200,28 @@ const App: React.FC = () => {
     setMainView('scheduledTasks');
   }, []);
 
+  const handleSelectScheduledTask = useCallback((taskId: string) => {
+    setMainView('scheduledTasks');
+    dispatch(selectTask(taskId));
+    dispatch(setViewMode('detail'));
+  }, [dispatch]);
+
   const handleShowMcp = useCallback(() => {
     setMainView('mcp');
+  }, []);
+
+  const handleOpenSearch = useCallback(() => {
+    void scheduledTaskService.loadTasks();
+    setIsSearchOpen(true);
+  }, []);
+
+  const handleCloseSearch = useCallback(() => {
+    setIsSearchOpen(false);
+  }, []);
+
+  const handleSelectSessionFromSearch = useCallback(async (sessionId: string) => {
+    setMainView('cowork');
+    await coworkService.loadSession(sessionId);
   }, []);
 
   const handleToggleSidebar = useCallback(() => {
@@ -391,7 +416,7 @@ const App: React.FC = () => {
 
       if (matchesShortcut(event, activeShortcuts.search)) {
         event.preventDefault();
-        window.dispatchEvent(new CustomEvent('cowork:shortcut:search'));
+        handleOpenSearch();
         return;
       }
 
@@ -403,7 +428,7 @@ const App: React.FC = () => {
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [handleShowSettings, handleNewChat]);
+  }, [handleOpenSearch, handleShowSettings, handleNewChat]);
 
   useEffect(() => {
     return () => {
@@ -593,6 +618,7 @@ const App: React.FC = () => {
           onShowSkills={handleShowSkills}
           onShowCowork={handleShowCowork}
           onShowScheduledTasks={handleShowScheduledTasks}
+          onOpenSearch={handleOpenSearch}
           onShowMcp={handleShowMcp}
           onNewChat={handleNewChat}
           isCollapsed={isSidebarCollapsed}
@@ -635,6 +661,14 @@ const App: React.FC = () => {
           </div>
         </div>
       </div>
+      <CoworkSearchModal
+        isOpen={isSearchOpen}
+        onClose={handleCloseSearch}
+        sessions={sessions}
+        scheduledTasks={scheduledTasks}
+        onSelectSession={handleSelectSessionFromSearch}
+        onSelectScheduledTask={handleSelectScheduledTask}
+      />
 
       {/* 设置窗口显示在所有主内容之上，但不影响主界面的交互 */}
       {showSettings && (

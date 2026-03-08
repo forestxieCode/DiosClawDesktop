@@ -4,7 +4,6 @@ import { RootState } from '../store';
 import { coworkService } from '../services/cowork';
 import { i18nService } from '../services/i18n';
 import CoworkSessionList from './cowork/CoworkSessionList';
-import CoworkSearchModal from './cowork/CoworkSearchModal';
 import ComposeIcon from './icons/ComposeIcon';
 import ConnectorIcon from './icons/ConnectorIcon';
 import SearchIcon from './icons/SearchIcon';
@@ -21,6 +20,7 @@ interface SidebarProps {
   onShowSkills: () => void;
   onShowCowork: () => void;
   onShowScheduledTasks: () => void;
+  onOpenSearch: () => void;
   onShowMcp: () => void;
   onNewChat: () => void;
   isCollapsed: boolean;
@@ -34,6 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   onShowSkills,
   onShowCowork,
   onShowScheduledTasks,
+  onOpenSearch,
   onShowMcp,
   onNewChat,
   isCollapsed,
@@ -42,26 +43,13 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const sessions = useSelector((state: RootState) => state.cowork.sessions);
   const currentSessionId = useSelector((state: RootState) => state.cowork.currentSessionId);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isBatchMode, setIsBatchMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [showBatchDeleteConfirm, setShowBatchDeleteConfirm] = useState(false);
   const isMac = window.electron.platform === 'darwin';
 
   useEffect(() => {
-    const handleSearch = () => {
-      onShowCowork();
-      setIsSearchOpen(true);
-    };
-    window.addEventListener('cowork:shortcut:search', handleSearch);
-    return () => {
-      window.removeEventListener('cowork:shortcut:search', handleSearch);
-    };
-  }, [onShowCowork]);
-
-  useEffect(() => {
     if (!isCollapsed) return;
-    setIsSearchOpen(false);
     setIsBatchMode(false);
     setSelectedIds(new Set());
     setShowBatchDeleteConfirm(false);
@@ -167,10 +155,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           </button>
           <button
             type="button"
-            onClick={() => {
-              onShowCowork();
-              setIsSearchOpen(true);
-            }}
+            onClick={onOpenSearch}
             className={`${navButtonBase} ${navButtonInactive}`}
           >
             <SearchIcon className="h-4 w-4" />
@@ -178,10 +163,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           </button>
           <button
             type="button"
-            onClick={() => {
-              setIsSearchOpen(false);
-              onShowScheduledTasks();
-            }}
+            onClick={onShowScheduledTasks}
             className={`${navButtonBase} ${
               activeView === 'scheduledTasks'
                 ? navButtonActive
@@ -193,10 +175,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           </button>
           <button
             type="button"
-            onClick={() => {
-              setIsSearchOpen(false);
-              onShowSkills();
-            }}
+            onClick={onShowSkills}
             className={`${navButtonBase} ${
               activeView === 'skills'
                 ? navButtonActive
@@ -208,10 +187,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           </button>
           <button
             type="button"
-            onClick={() => {
-              setIsSearchOpen(false);
-              onShowMcp();
-            }}
+            onClick={onShowMcp}
             className={`${navButtonBase} ${
               activeView === 'mcp'
                 ? navButtonActive
@@ -241,16 +217,6 @@ const Sidebar: React.FC<SidebarProps> = ({
           onEnterBatchMode={handleEnterBatchMode}
         />
       </div>
-      <CoworkSearchModal
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-        sessions={sessions}
-        currentSessionId={currentSessionId}
-        onSelectSession={handleSelectSession}
-        onDeleteSession={handleDeleteSession}
-        onTogglePin={handleTogglePin}
-        onRenameSession={handleRenameSession}
-      />
       {isBatchMode ? (
         <div className="px-3 pb-3 pt-2 flex items-center justify-between border-t dark:border-dark-border/80 border-border/80">
           <label className="flex items-center gap-2 cursor-pointer text-sm dark:text-dark-text-secondary text-text-secondary">
