@@ -154,7 +154,7 @@ body {
 }
 
 .app-topbar {
-  @apply draggable h-12 shrink-0 border-b dark:border-dark-border/80 border-border/80 dark:bg-dark-surface/55 bg-surface/75 backdrop-blur-sm;
+  @apply draggable relative z-20 h-12 shrink-0 border-b dark:border-dark-border/80 border-border/80 dark:bg-dark-surface/55 bg-surface/75 backdrop-blur-sm;
 }
 
 .app-topbar-inner {

@@ -956,7 +956,7 @@ const StreamingActivityBar: React.FC<{ messages: CoworkMessage[] }> = ({ message
 
   return (
     <div className="shrink-0 animate-fade-in px-4 pb-1">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="streaming-bar" />
         <div className="py-1">
           <span className="text-xs dark:text-dark-text-secondary text-text-secondary">
@@ -1846,7 +1846,7 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
 
       {/* Input Area */}
       <div className="p-4 shrink-0 border-t dark:border-dark-border/70 border-border/70 dark:bg-dark-surface/38 bg-surface/70 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <CoworkPromptInput
             onSubmit={onContinue}
             onStop={onStop}
