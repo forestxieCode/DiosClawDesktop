@@ -5,7 +5,7 @@ import { selectTask, setViewMode } from '../../store/slices/scheduledTaskSlice';
 import { scheduledTaskService } from '../../services/scheduledTask';
 import { i18nService } from '../../services/i18n';
 import type { ScheduledTask, Schedule } from '../../types/scheduledTask';
-import { EllipsisVerticalIcon, ClockIcon } from '@heroicons/react/24/outline';
+import { EllipsisVerticalIcon, ClockIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 const weekdayKeys: Record<number, string> = {
   0: 'scheduledTasksFormWeekSun',
@@ -60,6 +60,9 @@ const TaskListItem: React.FC<TaskListItemProps> = ({ task, onRequestDelete }) =>
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = React.useState(false);
   const menuRef = React.useRef<HTMLDivElement>(null);
+  const statusLabel = task.enabled
+    ? i18nService.t('scheduledTasksEnabled')
+    : i18nService.t('scheduledTasksDisabled');
 
   React.useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -107,7 +110,11 @@ const TaskListItem: React.FC<TaskListItemProps> = ({ task, onRequestDelete }) =>
 
   return (
     <div
-      className="grid grid-cols-[1fr_1fr_80px_40px] items-center gap-3 px-4 py-3 border-b dark:border-dark-border/50 border-border/50 hover:bg-surface-hover/50 dark:hover:bg-dark-surface-hover/50 cursor-pointer transition-colors"
+      className={`group grid grid-cols-[1fr_1fr_110px_40px] items-center gap-3 rounded-xl border px-4 py-3 cursor-pointer transition-all ${
+        task.state.runningAtMs
+          ? 'dark:border-blue-500/30 border-blue-300/60 dark:bg-blue-500/10 bg-blue-50/70'
+          : 'dark:border-dark-border/70 border-border/70 dark:bg-dark-surface/35 bg-white/80 hover:dark:bg-dark-surface-hover/55 hover:bg-surface-hover/70'
+      }`}
       onClick={() => dispatch(selectTask(task.id))}
     >
       {/* Title */}
@@ -121,7 +128,11 @@ const TaskListItem: React.FC<TaskListItemProps> = ({ task, onRequestDelete }) =>
       </div>
 
       {/* Status: toggle + running indicator */}
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center justify-between gap-2">
+        <span className={`text-xs font-medium ${task.enabled ? 'text-primary' : 'dark:text-dark-text-secondary text-text-secondary'}`}>
+          {statusLabel}
+        </span>
+
         {/* Running indicator */}
         {task.state.runningAtMs && (
           <span className="inline-flex items-center text-xs text-blue-500">
@@ -194,9 +205,10 @@ const TaskListItem: React.FC<TaskListItemProps> = ({ task, onRequestDelete }) =>
 
 interface TaskListProps {
   onRequestDelete: (taskId: string, taskName: string) => void;
+  onCreateTask?: () => void;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ onRequestDelete }) => {
+const TaskList: React.FC<TaskListProps> = ({ onRequestDelete, onCreateTask }) => {
   const tasks = useSelector((state: RootState) => state.scheduledTask.tasks);
   const loading = useSelector((state: RootState) => state.scheduledTask.loading);
 
@@ -213,31 +225,41 @@ const TaskList: React.FC<TaskListProps> = ({ onRequestDelete }) => {
   if (tasks.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 px-6">
-        <ClockIcon className="h-12 w-12 dark:text-dark-text-secondary/40 text-text-secondary/40 mb-4" />
-        <p className="text-sm font-medium dark:text-dark-text-secondary text-text-secondary mb-1">
+        <div className="mb-4 rounded-2xl p-4 dark:bg-dark-surface/50 bg-surface-hover/70">
+          <ClockIcon className="h-10 w-10 dark:text-dark-text-secondary/50 text-text-secondary/50" />
+        </div>
+        <p className="text-base font-semibold dark:text-dark-text text-text-primary mb-1.5">
           {i18nService.t('scheduledTasksEmptyState')}
         </p>
-        <p className="text-xs dark:text-dark-text-secondary/70 text-text-secondary/70 text-center">
+        <p className="text-sm dark:text-dark-text-secondary/80 text-text-secondary/80 text-center mb-5 max-w-md">
           {i18nService.t('scheduledTasksEmptyHint')}
         </p>
+        <button
+          type="button"
+          onClick={onCreateTask}
+          className="app-primary-btn h-10 gap-1.5 px-4 text-sm"
+        >
+          <PlusIcon className="h-4 w-4" />
+          {i18nService.t('scheduledTasksNewTask')}
+        </button>
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="px-4 py-3 space-y-2">
       {/* Column Headers */}
-      <div className="grid grid-cols-[1fr_1fr_80px_40px] items-center gap-3 px-4 py-2 border-b dark:border-dark-border/50 border-border/50">
-        <div className="text-xs font-medium dark:text-dark-text-secondary text-text-secondary">
+      <div className="grid grid-cols-[1fr_1fr_110px_40px] items-center gap-3 px-3 py-1">
+        <div className="text-xs font-semibold tracking-wide dark:text-dark-text-secondary text-text-secondary">
           {i18nService.t('scheduledTasksListColTitle')}
         </div>
-        <div className="text-xs font-medium dark:text-dark-text-secondary text-text-secondary">
+        <div className="text-xs font-semibold tracking-wide dark:text-dark-text-secondary text-text-secondary">
           {i18nService.t('scheduledTasksListColSchedule')}
         </div>
-        <div className="text-xs font-medium dark:text-dark-text-secondary text-text-secondary">
+        <div className="text-xs font-semibold tracking-wide dark:text-dark-text-secondary text-text-secondary">
           {i18nService.t('scheduledTasksListColStatus')}
         </div>
-        <div className="text-xs font-medium dark:text-dark-text-secondary text-text-secondary text-center">
+        <div className="text-xs font-semibold tracking-wide dark:text-dark-text-secondary text-text-secondary text-center">
           {i18nService.t('scheduledTasksListColMore')}
         </div>
       </div>

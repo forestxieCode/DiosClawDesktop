@@ -182,20 +182,25 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
     6: 'scheduledTasksFormWeekSat',
   };
 
-  const inputClass = 'w-full rounded-lg border dark:border-dark-border border-border dark:bg-dark-surface bg-white px-3 py-2 text-sm dark:text-dark-text text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50';
-  const labelClass = 'block text-sm font-medium dark:text-dark-text text-text-primary mb-1';
+  const inputClass = 'w-full rounded-xl border dark:border-dark-border/80 border-border/80 dark:bg-dark-surface/80 bg-white/95 px-3 py-2.5 text-sm dark:text-dark-text text-text-primary shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-colors';
+  const labelClass = 'block text-sm font-semibold dark:text-dark-text text-text-primary mb-1.5';
   const errorClass = 'text-xs text-red-500 mt-1';
 
   const scheduleModes: ScheduleMode[] = ['once', 'daily', 'weekly', 'monthly'];
 
   return (
-    <div className="p-4 space-y-4 max-w-2xl mx-auto">
-      <h2 className="text-lg font-semibold dark:text-dark-text text-text-primary">
-        {mode === 'create' ? i18nService.t('scheduledTasksFormCreate') : i18nService.t('scheduledTasksFormUpdate')}
-      </h2>
+    <div className="px-4 py-5 md:px-6 md:py-6 space-y-5 max-w-3xl mx-auto">
+      <div className="rounded-2xl border dark:border-dark-border/70 border-border/70 dark:bg-dark-surface/40 bg-surface-hover/35 px-4 py-3">
+        <h2 className="text-lg font-semibold dark:text-dark-text text-text-primary">
+          {mode === 'create' ? i18nService.t('scheduledTasksFormCreate') : i18nService.t('scheduledTasksFormUpdate')}
+        </h2>
+        <p className="mt-1 text-xs dark:text-dark-text-secondary text-text-secondary">
+          {i18nService.t('scheduledTasksEmptyHint')}
+        </p>
+      </div>
 
       {/* Name */}
-      <div>
+      <div className="rounded-2xl border dark:border-dark-border/70 border-border/70 dark:bg-dark-surface/35 bg-white/60 p-4">
         <label className={labelClass}>{i18nService.t('scheduledTasksFormName')}</label>
         <input
           type="text"
@@ -208,21 +213,21 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
       </div>
 
       {/* Prompt */}
-      <div>
+      <div className="rounded-2xl border dark:border-dark-border/70 border-border/70 dark:bg-dark-surface/35 bg-white/60 p-4">
         <label className={labelClass}>{i18nService.t('scheduledTasksPrompt')}</label>
         <textarea
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          className={inputClass + ' h-28 resize-none'}
+          className={inputClass + ' h-32 resize-y min-h-28'}
           placeholder={i18nService.t('scheduledTasksFormPromptPlaceholder')}
         />
         {errors.prompt && <p className={errorClass}>{errors.prompt}</p>}
       </div>
 
       {/* Schedule */}
-      <div>
+      <div className="rounded-2xl border dark:border-dark-border/70 border-border/70 dark:bg-dark-surface/35 bg-white/60 p-4">
         <label className={labelClass}>{i18nService.t('scheduledTasksFormScheduleType')}</label>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           {/* Schedule Mode Dropdown */}
           <select
             value={scheduleMode}
@@ -294,7 +299,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
       </div>
 
       {/* Working Directory */}
-      <div>
+      <div className="rounded-2xl border dark:border-dark-border/70 border-border/70 dark:bg-dark-surface/35 bg-white/60 p-4">
         <label className={labelClass}>{i18nService.t('scheduledTasksFormWorkingDirectory')}</label>
         <div className="flex items-center gap-2">
           <input
@@ -316,7 +321,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
       {errors.workingDirectory && <p className={errorClass}>{errors.workingDirectory}</p>}
 
       {/* Expires At */}
-      <div>
+      <div className="rounded-2xl border dark:border-dark-border/70 border-border/70 dark:bg-dark-surface/35 bg-white/60 p-4">
         <label className={labelClass}>
           {i18nService.t('scheduledTasksFormExpiresAt')}
           <span className="text-xs font-normal dark:text-dark-text-secondary text-text-secondary ml-1">
@@ -339,12 +344,15 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
             >
               {i18nService.t('scheduledTasksFormExpiresAtClear')}
             </button>
-          )}
+            )}
         </div>
+        <p className="mt-1.5 text-xs dark:text-dark-text-secondary text-text-secondary">
+          {i18nService.t('scheduledTasksFormExpiresAtHint')}
+        </p>
       </div>
 
       {/* Notification */}
-      <div>
+      <div className="rounded-2xl border dark:border-dark-border/70 border-border/70 dark:bg-dark-surface/35 bg-white/60 p-4">
         <label className={labelClass}>
           {i18nService.t('scheduledTasksFormNotify')}
           <span className="text-xs font-normal dark:text-dark-text-secondary text-text-secondary ml-1">
@@ -398,10 +406,13 @@ const TaskForm: React.FC<TaskFormProps> = ({ mode, task, onCancel, onSaved }) =>
             </div>
           )}
         </div>
+        <p className="mt-1.5 text-xs dark:text-dark-text-secondary text-text-secondary">
+          {i18nService.t('scheduledTasksFormNotifyHint')}
+        </p>
       </div>
 
       {/* Actions */}
-      <div className="flex items-center justify-end gap-3 pt-2">
+      <div className="sticky bottom-0 z-10 -mx-4 px-4 py-3 md:-mx-6 md:px-6 border-t dark:border-dark-border/70 border-border/70 dark:bg-dark-bg/95 bg-page/95 backdrop-blur-sm flex items-center justify-end gap-3">
         <button
           type="button"
           onClick={onCancel}

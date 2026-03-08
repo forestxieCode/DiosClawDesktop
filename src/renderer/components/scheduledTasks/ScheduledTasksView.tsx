@@ -9,7 +9,7 @@ import TaskForm from './TaskForm';
 import TaskDetail from './TaskDetail';
 import AllRunsHistory from './AllRunsHistory';
 import DeleteConfirmModal from './DeleteConfirmModal';
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, PlusIcon } from '@heroicons/react/24/outline';
 import SidebarToggleIcon from '../icons/SidebarToggleIcon';
 import ComposeIcon from '../icons/ComposeIcon';
 import WindowTitleBar from '../window/WindowTitleBar';
@@ -58,6 +58,12 @@ const ScheduledTasksView: React.FC<ScheduledTasksViewProps> = ({
     setDeleteTaskInfo(null);
   }, []);
 
+  const handleCreateTask = useCallback(() => {
+    setActiveTab('tasks');
+    dispatch(selectTask(null));
+    dispatch(setViewMode('create'));
+  }, [dispatch]);
+
   useEffect(() => {
     scheduledTaskService.loadTasks();
   }, []);
@@ -84,43 +90,45 @@ const ScheduledTasksView: React.FC<ScheduledTasksViewProps> = ({
       <div className="app-topbar">
         <div className="app-topbar-inner">
           <div className="flex items-center space-x-3 h-8">
-          {isSidebarCollapsed && (
-            <div className={`non-draggable flex items-center gap-1 ${isMac ? 'pl-[68px]' : ''}`}>
+            {isSidebarCollapsed && (
+              <div className={`non-draggable flex items-center gap-1 ${isMac ? 'pl-[68px]' : ''}`}>
+                <button
+                  type="button"
+                  onClick={onToggleSidebar}
+                  className="app-icon-btn"
+                >
+                  <SidebarToggleIcon className="h-4 w-4" isCollapsed={true} />
+                </button>
+                <button
+                  type="button"
+                  onClick={onNewChat}
+                  className="app-icon-btn"
+                >
+                  <ComposeIcon className="h-4 w-4" />
+                </button>
+                {updateBadge}
+              </div>
+            )}
+            {viewMode !== 'list' && (
               <button
-                type="button"
-                onClick={onToggleSidebar}
-                className="app-icon-btn"
+                onClick={handleBackToList}
+                className="non-draggable app-icon-btn-soft h-9 w-9"
+                aria-label={i18nService.t('back')}
               >
-                <SidebarToggleIcon className="h-4 w-4" isCollapsed={true} />
+                <ArrowLeftIcon className="h-5 w-5" />
               </button>
-              <button
-                type="button"
-                onClick={onNewChat}
-                className="app-icon-btn"
-              >
-                <ComposeIcon className="h-4 w-4" />
-              </button>
-              {updateBadge}
-            </div>
-          )}
-          {viewMode !== 'list' && (
-            <button
-              onClick={handleBackToList}
-              className="non-draggable app-icon-btn-soft h-9 w-9"
-              aria-label={i18nService.t('back')}
-            >
-              <ArrowLeftIcon className="h-5 w-5" />
-            </button>
-          )}
+            )}
             <h1 className="app-title">
-            {i18nService.t('scheduledTasksTitle')}
+              {i18nService.t('scheduledTasksTitle')}
             </h1>
           </div>
-          <WindowTitleBar inline />
+          <div className="flex items-center gap-2">
+            <WindowTitleBar inline />
+          </div>
         </div>
       </div>
 
-      {/* Tabs + New Task button */}
+      {/* Tabs */}
       {showTabs && (
         <div className="app-tabs-bar">
           <div className="flex">
@@ -147,15 +155,14 @@ const ScheduledTasksView: React.FC<ScheduledTasksViewProps> = ({
               {i18nService.t('scheduledTasksTabHistory')}
             </button>
           </div>
-          {activeTab === 'tasks' && (
-            <button
-              type="button"
-              onClick={() => dispatch(setViewMode('create'))}
-              className="app-primary-btn px-3 py-1 text-sm"
-            >
-              {i18nService.t('scheduledTasksNewTask')}
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={handleCreateTask}
+            className="app-primary-btn h-7 gap-1 px-2.5 text-xs"
+          >
+            <PlusIcon className="h-3.5 w-3.5" />
+            {i18nService.t('scheduledTasksNewTask')}
+          </button>
         </div>
       )}
 
@@ -165,7 +172,12 @@ const ScheduledTasksView: React.FC<ScheduledTasksViewProps> = ({
           <AllRunsHistory />
         ) : (
           <>
-            {viewMode === 'list' && <TaskList onRequestDelete={handleRequestDelete} />}
+            {viewMode === 'list' && (
+              <TaskList
+                onRequestDelete={handleRequestDelete}
+                onCreateTask={handleCreateTask}
+              />
+            )}
             {viewMode === 'create' && (
               <TaskForm
                 mode="create"
