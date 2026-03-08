@@ -576,8 +576,8 @@ const TodoWriteInputView: React.FC<{ items: ParsedTodoItem[] }> = ({ items }) =>
           <span className={`mt-0.5 h-4 w-4 rounded-[4px] border flex-shrink-0 inline-flex items-center justify-center ${getStatusCheckboxClass(item.status)}`}>
             {item.status === 'completed' && <CheckIcon className="h-3 w-3 stroke-[2.5]" />}
           </span>
-          <div className="min-w-0 flex-1">
-            <div className={`text-xs whitespace-pre-wrap break-words leading-5 ${
+            <div className="min-w-0 flex-1">
+            <div className={`text-[11px] whitespace-pre-wrap break-words leading-5 ${
               item.status === 'completed'
                 ? 'dark:text-dark-text-secondary/70 text-text-secondary/80'
                 : 'dark:text-dark-text text-text-primary'
@@ -638,22 +638,22 @@ const ToolCallGroup: React.FC<{
         }`} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 min-w-0">
-            <span className="text-sm font-medium dark:text-dark-text text-text-primary">
+            <span className="text-[13px] font-medium dark:text-dark-text text-text-primary">
               {toolName}
             </span>
             {toolInputSummary && (
-              <code className="text-xs dark:text-dark-text-secondary/85 text-text-secondary/85 font-mono truncate min-w-0">
+              <code className="text-[11px] dark:text-dark-text-secondary/85 text-text-secondary/85 font-mono truncate min-w-0">
                 {toolInputSummary}
               </code>
             )}
           </div>
           {toolResult && resultLineCount > 0 && !isTodoWriteTool && (
-            <div className="text-xs dark:text-dark-text-secondary/60 text-text-secondary/60 mt-0.5">
+            <div className="text-[11px] dark:text-dark-text-secondary/60 text-text-secondary/60 mt-0.5">
               {resultLineCount} {resultLineCount === 1 ? 'line' : 'lines'} of output
             </div>
           )}
           {!toolResult && (
-            <div className="text-xs dark:text-dark-text-secondary/60 text-text-secondary/60 mt-0.5">
+            <div className="text-[11px] dark:text-dark-text-secondary/60 text-text-secondary/60 mt-0.5">
               {i18nService.t('coworkToolRunning')}
             </div>
           )}
@@ -673,7 +673,7 @@ const ToolCallGroup: React.FC<{
                 <span className="ml-2 text-[10px] dark:text-dark-text-secondary text-text-secondary font-medium">Terminal</span>
               </div>
               {/* Terminal content */}
-              <div className="dark:bg-dark-surface-inset bg-surface-inset px-3 py-3 max-h-72 overflow-y-auto font-mono text-xs">
+              <div className="dark:bg-dark-surface-inset bg-surface-inset px-3 py-3 max-h-72 overflow-y-auto font-mono text-[11px]">
                 {toolInputDisplay && (
                   <div className="dark:text-dark-text text-text-primary">
                     <span className="text-primary select-none">$ </span>
@@ -705,7 +705,7 @@ const ToolCallGroup: React.FC<{
                     {i18nService.t('coworkToolInput')}
                   </div>
                   <div className="max-h-48 overflow-y-auto rounded-md px-2 py-2 dark:bg-dark-surface-inset/75 bg-surface-inset/85">
-                    <pre className="text-xs dark:text-dark-text text-text-primary whitespace-pre-wrap break-words font-mono">
+                    <pre className="text-[11px] dark:text-dark-text text-text-primary whitespace-pre-wrap break-words font-mono">
                       {toolInputDisplay}
                     </pre>
                   </div>
@@ -717,7 +717,7 @@ const ToolCallGroup: React.FC<{
                     {i18nService.t('coworkToolResult')}
                   </div>
                   <div className="max-h-64 overflow-y-auto rounded-md px-2 py-2 dark:bg-dark-surface-inset/75 bg-surface-inset/85">
-                    <pre className={`text-xs whitespace-pre-wrap break-words font-mono ${
+                    <pre className={`text-[11px] whitespace-pre-wrap break-words font-mono ${
                       isToolError ? 'text-red-500' : 'dark:text-dark-text text-text-primary'
                     }`}>
                       {toolResultDisplay}
@@ -820,11 +820,11 @@ const UserMessageItem: React.FC<{ message: CoworkMessage; skills: Skill[] }> = R
         <div className="pl-6 sm:pl-10 md:pl-14">
           <div className="flex items-start gap-3 flex-row-reverse">
             <div className="w-full min-w-0 flex flex-col items-end">
-              <div className="w-fit max-w-[42rem] rounded-2xl border border-primary/25 dark:border-primary-lighter/35 px-4 py-3 bg-primary/8 dark:bg-primary/16 dark:text-dark-text text-text-primary shadow-subtle">
+              <div className="w-fit max-w-[42rem] rounded-2xl border dark:border-dark-border/75 border-border/80 px-4 py-3 bg-white dark:bg-dark-surface dark:text-dark-text text-text-primary shadow-subtle">
                 {message.content?.trim() && (
                   <MarkdownContent
                     content={message.content}
-                    className="max-w-none whitespace-pre-wrap break-words"
+                    className="max-w-none whitespace-pre-wrap break-words text-[14px] leading-[1.5]"
                   />
                 )}
                 {imageAttachments.length > 0 && (
@@ -907,7 +907,7 @@ const AssistantMessageItem: React.FC<{
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="dark:text-dark-text text-text-primary">
+      <div className="dark:text-dark-text text-text-primary text-[14px] leading-[1.55]">
         <MarkdownContent
           content={displayContent}
           className="prose prose-sm dark:prose-invert max-w-none break-words"
@@ -962,7 +962,7 @@ const ThinkingBlock: React.FC<{
             isExpanded ? 'rotate-90' : ''
           }`}
         />
-        <span className="text-xs font-medium dark:text-dark-text-secondary text-text-secondary">
+        <span className="text-[11px] font-medium dark:text-dark-text-secondary text-text-secondary">
           {i18nService.t('reasoning')}
         </span>
         {isCurrentlyStreaming && (
@@ -970,8 +970,8 @@ const ThinkingBlock: React.FC<{
         )}
       </button>
       {isExpanded && (
-        <div className="px-3 pb-3 max-h-64 overflow-y-auto border-t dark:border-dark-border/75 border-border/80">
-          <div className="text-xs leading-relaxed dark:text-dark-text-secondary/80 text-text-secondary/80 whitespace-pre-wrap">
+        <div className="px-3 pt-2.5 pb-3.5 max-h-64 overflow-y-auto border-t dark:border-dark-border/75 border-border/80">
+          <div className="text-xs leading-6 dark:text-dark-text-secondary/80 text-text-secondary/80 whitespace-pre-wrap break-words">
             {displayContent}
           </div>
         </div>
@@ -1006,7 +1006,7 @@ const AssistantTurnBlock: React.FC<{
       <div className="rounded-lg border dark:border-dark-border/70 border-border/70 dark:bg-dark-bg/40 bg-page/60 px-3 py-2">
         <div className="flex items-start gap-2">
           <InformationCircleIcon className="h-4 w-4 mt-0.5 dark:text-dark-text-secondary text-text-secondary flex-shrink-0" />
-          <div className="text-xs whitespace-pre-wrap dark:text-dark-text-secondary text-text-secondary">
+          <div className="text-[11px] whitespace-pre-wrap dark:text-dark-text-secondary text-text-secondary">
             {content}
           </div>
         </div>
@@ -1026,16 +1026,16 @@ const AssistantTurnBlock: React.FC<{
             isToolError ? 'bg-red-500' : 'bg-dark-text-secondary/50'
           }`} />
           <div className="flex-1 min-w-0">
-            <div className="text-sm font-medium dark:text-dark-text-secondary text-text-secondary">
+            <div className="text-[13px] font-medium dark:text-dark-text-secondary text-text-secondary">
               {i18nService.t('coworkToolResult')}
             </div>
             {resultLineCount > 0 && (
-              <div className="text-xs dark:text-dark-text-secondary/60 text-text-secondary/60 mt-0.5">
+              <div className="text-[11px] dark:text-dark-text-secondary/60 text-text-secondary/60 mt-0.5">
                 {resultLineCount} {resultLineCount === 1 ? 'line' : 'lines'} of output
               </div>
             )}
             <div className="mt-2 px-3 py-2 rounded-lg dark:bg-dark-surface/50 bg-surface/50 max-h-64 overflow-y-auto">
-              <pre className={`text-xs whitespace-pre-wrap break-words font-mono ${
+              <pre className={`text-[11px] whitespace-pre-wrap break-words font-mono ${
                 isToolError ? 'text-red-500' : 'dark:text-dark-text text-text-primary'
               }`}>
                 {toolResultDisplay || i18nService.t('coworkToolRunning')}
