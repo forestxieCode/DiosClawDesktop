@@ -611,7 +611,7 @@ const App: React.FC = () => {
         <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
       )}
       <div className="flex flex-1 min-h-0 overflow-hidden">
-        <div className="app-workspace-panel flex flex-1 min-h-0 min-w-0 overflow-hidden rounded-2xl animate-fade-in">
+        <div className="app-workspace-panel flex flex-1 min-h-0 min-w-0 overflow-hidden rounded-1xl animate-fade-in">
           <Sidebar
             onShowLogin={handleShowLogin}
             onShowSettings={handleShowSettings}

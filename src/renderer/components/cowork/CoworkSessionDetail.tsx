@@ -623,11 +623,11 @@ const ToolCallGroup: React.FC<{
     <div className="relative py-1">
       {/* Vertical connecting line to next tool group */}
       {!isLastInSequence && (
-        <div className="absolute left-[3.5px] top-[14px] bottom-[-8px] w-px dark:bg-dark-text-secondary/30 bg-text-secondary/30" />
+        <div className="absolute left-[11px] top-[30px] bottom-[-6px] w-px dark:bg-dark-border/80 bg-border/90" />
       )}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-start gap-2 text-left group relative z-10"
+        className="w-full flex items-start gap-2.5 text-left group relative z-10 rounded-lg border dark:border-dark-border/80 border-border/85 dark:bg-dark-surface-muted/65 bg-surface-muted/70 px-3 py-2.5 transition-colors hover:dark:bg-dark-surface/75 hover:bg-surface/95"
       >
         <span className={`mt-1.5 w-2 h-2 rounded-full flex-shrink-0 ${
           !toolResult
@@ -637,12 +637,12 @@ const ToolCallGroup: React.FC<{
               : 'bg-green-500'
         }`} />
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-sm font-medium dark:text-dark-text-secondary text-text-secondary">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-sm font-medium dark:text-dark-text text-text-primary">
               {toolName}
             </span>
             {toolInputSummary && (
-              <code className="text-xs dark:text-dark-text-secondary/80 text-text-secondary/80 font-mono truncate max-w-[400px]">
+              <code className="text-xs dark:text-dark-text-secondary/85 text-text-secondary/85 font-mono truncate min-w-0">
                 {toolInputSummary}
               </code>
             )}
@@ -658,9 +658,10 @@ const ToolCallGroup: React.FC<{
             </div>
           )}
         </div>
+        <ChevronRightIcon className={`h-3.5 w-3.5 mt-0.5 dark:text-dark-text-secondary/75 text-text-secondary/75 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`} />
       </button>
       {isExpanded && (
-        <div className="ml-4 mt-2">
+        <div className="ml-5 mt-1.5 rounded-lg border dark:border-dark-border/80 border-border/85 dark:bg-dark-surface/72 bg-surface/96 p-2.5">
           {isBashTool ? (
             // Terminal-style display for Bash commands
             <div className="rounded-lg overflow-hidden border dark:border-dark-border border-border">
@@ -703,7 +704,7 @@ const ToolCallGroup: React.FC<{
                   <div className="text-[10px] font-medium dark:text-dark-text-secondary/70 text-text-secondary/70 uppercase tracking-wider mb-1">
                     {i18nService.t('coworkToolInput')}
                   </div>
-                  <div className="max-h-48 overflow-y-auto">
+                  <div className="max-h-48 overflow-y-auto rounded-md px-2 py-2 dark:bg-dark-surface-inset/75 bg-surface-inset/85">
                     <pre className="text-xs dark:text-dark-text text-text-primary whitespace-pre-wrap break-words font-mono">
                       {toolInputDisplay}
                     </pre>
@@ -715,7 +716,7 @@ const ToolCallGroup: React.FC<{
                   <div className="text-[10px] font-medium dark:text-dark-text-secondary/70 text-text-secondary/70 uppercase tracking-wider mb-1">
                     {i18nService.t('coworkToolResult')}
                   </div>
-                  <div className="max-h-64 overflow-y-auto">
+                  <div className="max-h-64 overflow-y-auto rounded-md px-2 py-2 dark:bg-dark-surface-inset/75 bg-surface-inset/85">
                     <pre className={`text-xs whitespace-pre-wrap break-words font-mono ${
                       isToolError ? 'text-red-500' : 'dark:text-dark-text text-text-primary'
                     }`}>
@@ -811,15 +812,15 @@ const UserMessageItem: React.FC<{ message: CoworkMessage; skills: Skill[] }> = R
 
   return (
     <div
-      className="py-2.5 px-4"
+      className="py-2.5 px-4 md:px-5"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="max-w-4xl mx-auto">
-        <div className="pl-4 sm:pl-8 md:pl-12">
+        <div className="pl-6 sm:pl-10 md:pl-14">
           <div className="flex items-start gap-3 flex-row-reverse">
             <div className="w-full min-w-0 flex flex-col items-end">
-              <div className="w-fit max-w-[42rem] rounded-2xl border dark:border-dark-border/70 border-border/70 px-4 py-2.5 dark:bg-dark-surface/92 bg-surface/96 dark:text-dark-text text-text-primary shadow-subtle">
+              <div className="w-fit max-w-[42rem] rounded-2xl border border-primary/25 dark:border-primary-lighter/35 px-4 py-3 bg-primary/8 dark:bg-primary/16 dark:text-dark-text text-text-primary shadow-subtle">
                 {message.content?.trim() && (
                   <MarkdownContent
                     content={message.content}
@@ -850,11 +851,11 @@ const UserMessageItem: React.FC<{ message: CoworkMessage; skills: Skill[] }> = R
                 {messageSkills.map(skill => (
                   <div
                     key={skill.id}
-                    className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-primary/5 dark:bg-primary/10"
+                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-primary/25 dark:border-primary-lighter/30 bg-primary/10 dark:bg-primary/15"
                     title={skill.description}
                   >
-                    <PuzzleIcon className="h-2.5 w-2.5 text-primary/70" />
-                    <span className="text-[10px] font-medium text-primary/70 max-w-[60px] truncate">
+                    <PuzzleIcon className="h-2.5 w-2.5 text-primary/80 dark:text-primary-lighter/80" />
+                    <span className="text-[10px] font-medium text-primary/85 dark:text-primary-lighter/80 max-w-[84px] truncate">
                       {skill.name}
                     </span>
                   </div>
@@ -909,7 +910,7 @@ const AssistantMessageItem: React.FC<{
       <div className="dark:text-dark-text text-text-primary">
         <MarkdownContent
           content={displayContent}
-          className="prose dark:prose-invert max-w-none"
+          className="prose prose-sm dark:prose-invert max-w-none break-words"
           resolveLocalFilePath={resolveLocalFilePath}
         />
       </div>
@@ -921,49 +922,6 @@ const AssistantMessageItem: React.FC<{
           />
         </div>
       )}
-    </div>
-  );
-};
-
-// Streaming activity bar shown between messages and input
-const StreamingActivityBar: React.FC<{ messages: CoworkMessage[] }> = ({ messages }) => {
-  // Walk messages backwards to find the latest tool_use without a paired tool_result
-  const getStatusText = (): string => {
-    const toolUseIds = new Set<string>();
-    const toolResultIds = new Set<string>();
-    for (const msg of messages) {
-      const id = msg.metadata?.toolUseId;
-      if (typeof id === 'string') {
-        if (msg.type === 'tool_result') toolResultIds.add(id);
-        if (msg.type === 'tool_use') toolUseIds.add(id);
-      }
-    }
-    // Walk backwards to find latest unresolved tool_use
-    for (let i = messages.length - 1; i >= 0; i--) {
-      const msg = messages[i];
-      if (msg.type === 'tool_use') {
-        const id = msg.metadata?.toolUseId;
-        if (typeof id === 'string' && !toolResultIds.has(id)) {
-          const toolName = typeof msg.metadata?.toolName === 'string' ? msg.metadata.toolName : null;
-          if (toolName) {
-            return `${i18nService.t('coworkToolRunning')} ${toolName}...`;
-          }
-        }
-      }
-    }
-    return `${i18nService.t('coworkToolRunning')}`;
-  };
-
-  return (
-    <div className="shrink-0 animate-fade-in px-4 pb-1">
-      <div className="max-w-4xl mx-auto">
-        <div className="streaming-bar" />
-        <div className="py-1">
-          <span className="text-xs dark:text-dark-text-secondary text-text-secondary">
-            {getStatusText()}
-          </span>
-        </div>
-      </div>
     </div>
   );
 };
@@ -994,10 +952,10 @@ const ThinkingBlock: React.FC<{
   }, [isCurrentlyStreaming]);
 
   return (
-    <div className="rounded-lg border dark:border-dark-border/50 border-border/50 overflow-hidden">
+    <div className="rounded-lg border dark:border-dark-border/75 border-border/80 dark:bg-dark-surface-muted/65 bg-surface-muted/70 overflow-hidden">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center gap-2 px-3 py-2 text-left dark:hover:bg-dark-surface-hover/50 hover:bg-surface-hover/50 transition-colors"
+        className="w-full flex items-center gap-2 px-3 py-2 text-left dark:hover:bg-dark-surface-hover/65 hover:bg-surface-hover/60 transition-colors"
       >
         <ChevronRightIcon
           className={`h-3.5 w-3.5 dark:text-dark-text-secondary text-text-secondary flex-shrink-0 transition-transform duration-200 ${
@@ -1012,7 +970,7 @@ const ThinkingBlock: React.FC<{
         )}
       </button>
       {isExpanded && (
-        <div className="px-3 pb-3 max-h-64 overflow-y-auto">
+        <div className="px-3 pb-3 max-h-64 overflow-y-auto border-t dark:border-dark-border/75 border-border/80">
           <div className="text-xs leading-relaxed dark:text-dark-text-secondary/80 text-text-secondary/80 whitespace-pre-wrap">
             {displayContent}
           </div>
@@ -1090,69 +1048,71 @@ const AssistantTurnBlock: React.FC<{
   };
 
   return (
-    <div className="px-4 py-2.5">
+    <div className="px-4 md:px-5 py-2">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-start gap-3">
-          <div className="flex-1 min-w-0 px-4 py-3.5 space-y-3 rounded-2xl border dark:border-dark-border/60 border-border/65 dark:bg-dark-surface/28 bg-surface/56 shadow-subtle">
-            {visibleAssistantItems.map((item, index) => {
-              if (item.type === 'assistant') {
-                if (item.message.metadata?.isThinking) {
+          <div className="flex-1 min-w-0 px-4 py-3.5 rounded-2xl border dark:border-dark-border/75 border-border/80 dark:bg-dark-surface/78 bg-surface/95 shadow-subtle">
+            <div className="space-y-3">
+              {visibleAssistantItems.map((item, index) => {
+                if (item.type === 'assistant') {
+                  if (item.message.metadata?.isThinking) {
+                    return (
+                      <ThinkingBlock
+                        key={item.message.id}
+                        message={item.message}
+                        mapDisplayText={mapDisplayText}
+                      />
+                    );
+                  }
+                  // Check if there are any tool_group items after this assistant message
+                  const hasToolGroupAfter = visibleAssistantItems
+                    .slice(index + 1)
+                    .some(laterItem => laterItem.type === 'tool_group');
+
                   return (
-                    <ThinkingBlock
+                    <AssistantMessageItem
                       key={item.message.id}
                       message={item.message}
+                      resolveLocalFilePath={resolveLocalFilePath}
+                      mapDisplayText={mapDisplayText}
+                      showCopyButton={showCopyButtons && !hasToolGroupAfter}
+                    />
+                  );
+                }
+
+                if (item.type === 'tool_group') {
+                  const nextItem = visibleAssistantItems[index + 1];
+                  const isLastInSequence = !nextItem || nextItem.type !== 'tool_group';
+                  return (
+                    <ToolCallGroup
+                      key={`tool-${item.group.toolUse.id}`}
+                      group={item.group}
+                      isLastInSequence={isLastInSequence}
                       mapDisplayText={mapDisplayText}
                     />
                   );
                 }
-                // Check if there are any tool_group items after this assistant message
-                const hasToolGroupAfter = visibleAssistantItems
-                  .slice(index + 1)
-                  .some(laterItem => laterItem.type === 'tool_group');
 
-                return (
-                  <AssistantMessageItem
-                    key={item.message.id}
-                    message={item.message}
-                    resolveLocalFilePath={resolveLocalFilePath}
-                    mapDisplayText={mapDisplayText}
-                    showCopyButton={showCopyButtons && !hasToolGroupAfter}
-                  />
-                );
-              }
-
-              if (item.type === 'tool_group') {
-                const nextItem = visibleAssistantItems[index + 1];
-                const isLastInSequence = !nextItem || nextItem.type !== 'tool_group';
-                return (
-                  <ToolCallGroup
-                    key={`tool-${item.group.toolUse.id}`}
-                    group={item.group}
-                    isLastInSequence={isLastInSequence}
-                    mapDisplayText={mapDisplayText}
-                  />
-                );
-              }
-
-              if (item.type === 'system') {
-                const systemMessage = renderSystemMessage(item.message);
-                if (!systemMessage) {
-                  return null;
+                if (item.type === 'system') {
+                  const systemMessage = renderSystemMessage(item.message);
+                  if (!systemMessage) {
+                    return null;
+                  }
+                  return (
+                    <div key={item.message.id}>
+                      {systemMessage}
+                    </div>
+                  );
                 }
+
                 return (
                   <div key={item.message.id}>
-                    {systemMessage}
+                    {renderOrphanToolResult(item.message)}
                   </div>
                 );
-              }
-
-              return (
-                <div key={item.message.id}>
-                  {renderOrphanToolResult(item.message)}
-                </div>
-              );
-            })}
-            {showTypingIndicator && <TypingDots />}
+              })}
+              {showTypingIndicator && <TypingDots />}
+            </div>
           </div>
         </div>
       </div>
@@ -1626,7 +1586,7 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
       const showAssistantBlock = turn.assistantItems.length > 0 || showTypingIndicator;
 
       return (
-        <React.Fragment key={turn.id}>
+        <div key={turn.id} className="relative">
           {turn.userMessage && (
             <div data-export-role="user-message">
               <UserMessageItem message={turn.userMessage} skills={skills} />
@@ -1643,7 +1603,7 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
               />
             </div>
           )}
-        </React.Fragment>
+        </div>
       );
     });
   };
@@ -1835,17 +1795,18 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
       <div
         ref={scrollContainerRef}
         onScroll={handleMessagesScroll}
-        className="flex-1 overflow-y-auto min-h-0 pt-3 scroll-smooth"
+        className="flex-1 overflow-y-auto min-h-0 pt-2 scroll-smooth [scrollbar-gutter:stable]"
       >
-        {renderConversationTurns()}
-        <div className="h-20" />
+        <div className="max-w-4xl mx-auto px-1 md:px-2 pb-6">
+          <div className="space-y-1">
+            {renderConversationTurns()}
+          </div>
+          <div className="h-20" />
+        </div>
       </div>
 
-      {/* Streaming Activity Bar */}
-      {isStreaming && <StreamingActivityBar messages={currentSession.messages} />}
-
       {/* Input Area */}
-      <div className="p-4 shrink-0 border-t dark:border-dark-border/70 border-border/70 dark:bg-dark-surface/38 bg-surface/70 backdrop-blur-sm">
+      <div className="p-4 shrink-0 border-t dark:border-dark-border/75 border-border/80 dark:bg-dark-surface/60 bg-surface/80 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto">
           <CoworkPromptInput
             onSubmit={onContinue}
