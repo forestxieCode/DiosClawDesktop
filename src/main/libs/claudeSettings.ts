@@ -277,7 +277,7 @@ export function resolveCurrentApiConfig(target: OpenAICompatProxyTarget = 'local
 
   return {
     config: {
-      apiKey: resolvedApiKey || 'lobsterai-openai-compat',
+      apiKey: resolvedApiKey || 'diosclaw-openai-compat',
       baseURL: proxyBaseURL,
       model: matched.modelId,
       apiType: 'openai',

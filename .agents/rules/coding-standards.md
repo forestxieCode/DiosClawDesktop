@@ -1,6 +1,6 @@
-# CLAUDE.md
+# Antigravity Rule: DiosClaw Coding Standards & Architecture
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+*This file provides guidance to AI coding agents (like Antigravity / Gemini) when working with code in this repository. It is a direct port of the original AGENTS.md / CLAUDE.md.*
 
 ## Build and Development Commands
 
@@ -136,7 +136,7 @@ The Cowork feature provides AI-assisted coding sessions:
 
 ### Artifacts System
 
-The Artifacts feature provides rich preview of code outputs similar to Claude's artifacts:
+The Artifacts feature provides rich preview of code outputs:
 
 **Supported Types**:
 - `html` - Full HTML pages rendered in sandboxed iframe
@@ -144,15 +144,6 @@ The Artifacts feature provides rich preview of code outputs similar to Claude's 
 - `mermaid` - Flowcharts, sequence diagrams, class diagrams via Mermaid.js
 - `react` - React/JSX components compiled with Babel in isolated iframe
 - `code` - Syntax highlighted code with line numbers
-
-**Detection Methods**:
-1. Explicit markers: ` ```artifact:html title="My Page" `
-2. Heuristic detection: Analyzes code block language and content patterns
-
-**UI Components**:
-- Right-side panel (300-800px resizable width)
-- Header with type icon, title, copy/download/close buttons
-- Artifact badges in messages to switch between artifacts
 
 **Security**:
 - HTML: `sandbox="allow-scripts"` with no `allow-same-origin`
@@ -167,40 +158,23 @@ The Artifacts feature provides rich preview of code outputs similar to Claude's 
 - Cowork sessions and messages stored in `cowork_sessions` and `cowork_messages` tables
 - Database file: `diosclaw.sqlite` in user data directory
 
-### TypeScript Configuration
-
-- `tsconfig.json`: React/renderer code (ES2020, ESNext modules)
-- `electron-tsconfig.json`: Electron main process (CommonJS output to `dist-electron/`)
-
-### Key Dependencies
-
-- `@anthropic-ai/claude-agent-sdk` - Claude Agent SDK for cowork sessions
-- `sql.js` - SQLite database for persistence
-- `react-markdown`, `remark-gfm`, `rehype-katex` - Markdown rendering with math support
-- `mermaid` - Diagram rendering
-- `dompurify` - SVG/HTML sanitization
-
 ## Coding Style & Naming Conventions
 
 - Use TypeScript, functional React components, and Hooks; keep logic in `src/renderer/services/` when it is not UI-specific.
-- Match existing formatting: 2-space indentation, single quotes, and semicolons.
+- Match existing formatting: **2-space indentation**, **single quotes**, and **semicolons** at the end of lines.
 - Naming: `PascalCase` for components (e.g., `Chat.tsx`), `camelCase` for functions/vars, and `*Slice.ts` for Redux slices.
-- Tailwind CSS is the primary styling approach; prefer utility classes over bespoke CSS.
+- **Tailwind CSS** is the primary styling approach; prefer utility classes over bespoke CSS.
 
 ## Testing Guidelines
 
 - Tests use Node.js built-in `node:test` module (no Jest/Mocha/Vitest).
 - Run tests: `npm run test:memory` (compiles Electron main process first, then runs `tests/coworkMemoryExtractor.test.mjs`).
-- Test files live in `tests/` directory and import compiled output from `dist-electron/`.
 - Validate UI changes manually by running `npm run electron:dev` and exercising key flows:
   - Cowork: start session, send prompts, approve/deny tool permissions, stop session
   - Artifacts: preview HTML, SVG, Mermaid diagrams, React components
-  - Settings: theme switching, language switching
-- Keep console warnings/errors clean; lint via `npm run lint` before submitting.
 
 ## Commit & Pull Request Guidelines
 
-- Recent history uses conventional prefixes like `feat:`, `refactor:`, and `chore:`; older commits include `feature:` and `Initial commit`.
+- Recent history uses conventional prefixes like `feat:`, `refactor:`, and `chore:`.
 - Prefer `type: short imperative summary` (e.g., `feat: add artifact toolbar actions`).
-- PRs should include a concise description, linked issue if applicable, and screenshots for UI changes.
 - Call out any Electron-specific behavior changes (IPC, storage, windowing) in the PR description.
