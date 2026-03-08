@@ -9,7 +9,7 @@ import { SignalIcon, XMarkIcon, CheckCircleIcon, XCircleIcon, ExclamationTriangl
 import { EyeIcon, EyeSlashIcon, XCircleIcon as XCircleIconSolid } from '@heroicons/react/20/solid';
 import { RootState } from '../../store';
 import { imService } from '../../services/im';
-import { setDingTalkConfig, setFeishuConfig, setTelegramConfig, setDiscordConfig, setNimConfig, setXiaomifengConfig, clearError } from '../../store/slices/imSlice';
+import { setDingTalkConfig, setFeishuConfig, setQQConfig, setTelegramConfig, setDiscordConfig, setNimConfig, setXiaomifengConfig, setWecomConfig, clearError } from '../../store/slices/imSlice';
 import { i18nService } from '../../services/i18n';
 import type { IMPlatform, IMConnectivityCheck, IMConnectivityTestResult, IMGatewayConfig } from '../../types/im';
 import { getVisibleIMPlatforms } from '../../utils/regionFilter';
@@ -18,10 +18,12 @@ import { getVisibleIMPlatforms } from '../../utils/regionFilter';
 const platformMeta: Record<IMPlatform, { label: string; logo: string }> = {
   dingtalk: { label: '钉钉', logo: 'dingding.png' },
   feishu: { label: '飞书', logo: 'feishu.png' },
+  qq: { label: 'QQ', logo: 'qq_bot.jpeg' },
   telegram: { label: 'Telegram', logo: 'telegram.svg' },
   discord: { label: 'Discord', logo: 'discord.svg' },
   nim: { label: '云信', logo: 'nim.png' },
   xiaomifeng: { label: '小蜜蜂', logo: 'xiaomifeng.png' },
+  wecom: { label: '企业微信', logo: 'wecom.png' },
 };
 
 const verdictColorClass: Record<IMConnectivityTestResult['verdict'], string> = {
@@ -112,6 +114,11 @@ const IMSettings: React.FC = () => {
     dispatch(setFeishuConfig({ [field]: value }));
   };
 
+  // Handle QQ config change
+  const handleQQChange = (field: 'appId' | 'appSecret', value: string) => {
+    dispatch(setQQConfig({ [field]: value }));
+  };
+
   // Handle Telegram config change
   const handleTelegramChange = (field: 'botToken' | 'allowedUserIds', value: string | string[]) => {
     dispatch(setTelegramConfig({ [field]: value }));
@@ -133,6 +140,11 @@ const IMSettings: React.FC = () => {
   // Handle Xiaomifeng config change
   const handleXiaomifengChange = (field: 'clientId' | 'secret', value: string) => {
     dispatch(setXiaomifengConfig({ [field]: value }));
+  };
+
+  // Handle WeCom config change
+  const handleWecomChange = (field: 'botId' | 'secret', value: string) => {
+    dispatch(setWecomConfig({ [field]: value }));
   };
 
   // Save config on blur — also auto-triggers NIM connectivity test when
@@ -255,6 +267,8 @@ const IMSettings: React.FC = () => {
   const discordConnected = status.discord.connected;
   const nimConnected = status.nim.connected;
   const xiaomifengConnected = status.xiaomifeng?.connected ?? false;
+  const qqConnected = status.qq?.connected ?? false;
+  const wecomConnected = status.wecom?.connected ?? false;
 
   // Compute visible platforms based on language
   const platforms = useMemo<IMPlatform[]>(() => {
@@ -286,6 +300,12 @@ const IMSettings: React.FC = () => {
     if (platform === 'xiaomifeng') {
       return !!(config.xiaomifeng.clientId && config.xiaomifeng.secret);
     }
+    if (platform === 'qq') {
+      return !!(config.qq.appId && config.qq.appSecret);
+    }
+    if (platform === 'wecom') {
+      return !!(config.wecom.botId && config.wecom.secret);
+    }
     return !!(config.feishu.appId && config.feishu.appSecret);
   };
 
@@ -301,6 +321,8 @@ const IMSettings: React.FC = () => {
     if (platform === 'discord') return discordConnected;
     if (platform === 'nim') return nimConnected;
     if (platform === 'xiaomifeng') return xiaomifengConnected;
+    if (platform === 'qq') return qqConnected;
+    if (platform === 'wecom') return wecomConnected;
     return feishuConnected;
   };
 
@@ -371,10 +393,12 @@ const IMSettings: React.FC = () => {
     const actionMap: Record<IMPlatform, any> = {
       dingtalk: setDingTalkConfig,
       feishu: setFeishuConfig,
+      qq: setQQConfig,
       telegram: setTelegramConfig,
       discord: setDiscordConfig,
       nim: setNimConfig,
       xiaomifeng: setXiaomifengConfig,
+      wecom: setWecomConfig,
     };
     return actionMap[platform];
   };
@@ -432,7 +456,7 @@ const IMSettings: React.FC = () => {
                   <img
                     src={meta.logo}
                     alt={meta.label}
-                    className="w-6 h-6 object-contain"
+                    className="w-6 h-6 object-contain rounded-md"
                   />
                 </div>
                 <span className={`text-sm font-medium truncate ${
@@ -476,7 +500,7 @@ const IMSettings: React.FC = () => {
               <img
                 src={platformMeta[activePlatform].logo}
                 alt={platformMeta[activePlatform].label}
-                className="w-4 h-4 object-contain"
+                className="w-4 h-4 object-contain rounded"
               />
             </div>
             <h3 className="text-sm font-medium dark:text-dark-text text-text-primary">
@@ -655,6 +679,88 @@ const IMSettings: React.FC = () => {
             {status.feishu.error && (
               <div className="text-xs text-red-500 bg-red-500/10 px-3 py-2 rounded-lg">
                 {status.feishu.error}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* QQ Settings */}
+        {activePlatform === 'qq' && (
+          <div className="space-y-3">
+            {/* AppID */}
+            <div className="space-y-1.5">
+              <label className="block text-xs font-medium dark:text-claude-darkTextSecondary text-claude-textSecondary">
+                AppID
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={config.qq.appId}
+                  onChange={(e) => handleQQChange('appId', e.target.value)}
+                  onBlur={handleSaveConfig}
+                  className="block w-full rounded-lg dark:bg-claude-darkSurface/80 bg-claude-surface/80 dark:border-claude-darkBorder/60 border-claude-border/60 border focus:border-claude-accent focus:ring-1 focus:ring-claude-accent/30 dark:text-claude-darkText text-claude-text px-3 py-2 pr-8 text-sm transition-colors"
+                  placeholder="102xxxxx"
+                />
+                {config.qq.appId && (
+                  <div className="absolute right-2 inset-y-0 flex items-center">
+                    <button
+                      type="button"
+                      onClick={() => { handleQQChange('appId', ''); void imService.updateConfig({ qq: { ...config.qq, appId: '' } }); }}
+                      className="p-0.5 rounded text-claude-textSecondary dark:text-claude-darkTextSecondary hover:text-claude-accent transition-colors"
+                      title={i18nService.t('clear') || 'Clear'}
+                    >
+                      <XCircleIconSolid className="h-4 w-4" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* AppSecret */}
+            <div className="space-y-1.5">
+              <label className="block text-xs font-medium dark:text-claude-darkTextSecondary text-claude-textSecondary">
+                AppSecret
+              </label>
+              <div className="relative">
+                <input
+                  type={showSecrets['qq.appSecret'] ? 'text' : 'password'}
+                  value={config.qq.appSecret}
+                  onChange={(e) => handleQQChange('appSecret', e.target.value)}
+                  onBlur={handleSaveConfig}
+                  className="block w-full rounded-lg dark:bg-claude-darkSurface/80 bg-claude-surface/80 dark:border-claude-darkBorder/60 border-claude-border/60 border focus:border-claude-accent focus:ring-1 focus:ring-claude-accent/30 dark:text-claude-darkText text-claude-text px-3 py-2 pr-16 text-sm transition-colors"
+                  placeholder="••••••••••••"
+                />
+                <div className="absolute right-2 inset-y-0 flex items-center gap-1">
+                  {config.qq.appSecret && (
+                    <button
+                      type="button"
+                      onClick={() => { handleQQChange('appSecret', ''); void imService.updateConfig({ qq: { ...config.qq, appSecret: '' } }); }}
+                      className="p-0.5 rounded text-claude-textSecondary dark:text-claude-darkTextSecondary hover:text-claude-accent transition-colors"
+                      title={i18nService.t('clear') || 'Clear'}
+                    >
+                      <XCircleIconSolid className="h-4 w-4" />
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setShowSecrets(prev => ({ ...prev, 'qq.appSecret': !prev['qq.appSecret'] }))}
+                    className="p-0.5 rounded text-claude-textSecondary dark:text-claude-darkTextSecondary hover:text-claude-accent transition-colors"
+                    title={showSecrets['qq.appSecret'] ? (i18nService.t('hide') || 'Hide') : (i18nService.t('show') || 'Show')}
+                  >
+                    {showSecrets['qq.appSecret'] ? <EyeIcon className="h-4 w-4" /> : <EyeSlashIcon className="h-4 w-4" />}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-1">
+              {renderConnectivityTestButton('qq')}
+            </div>
+
+            {/* Error display */}
+            {status.qq?.lastError && (
+              <div className="text-xs text-red-500 bg-red-500/10 px-3 py-2 rounded-lg">
+                {status.qq.lastError}
               </div>
             )}
           </div>
@@ -1202,6 +1308,95 @@ const IMSettings: React.FC = () => {
             {status.xiaomifeng?.lastError && (
               <div className="text-xs text-red-500 bg-red-500/10 px-3 py-2 rounded-lg">
                 {translateIMError(status.xiaomifeng.lastError)}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* WeCom (企业微信) Settings */}
+        {activePlatform === 'wecom' && (
+          <div className="space-y-3">
+            {/* Bot ID */}
+            <div className="space-y-1.5">
+              <label className="block text-xs font-medium dark:text-claude-darkTextSecondary text-claude-textSecondary">
+                Bot ID
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={config.wecom.botId}
+                  onChange={(e) => handleWecomChange('botId', e.target.value)}
+                  onBlur={handleSaveConfig}
+                  className="block w-full rounded-lg dark:bg-claude-darkSurface/80 bg-claude-surface/80 dark:border-claude-darkBorder/60 border-claude-border/60 border focus:border-claude-accent focus:ring-1 focus:ring-claude-accent/30 dark:text-claude-darkText text-claude-text px-3 py-2 pr-8 text-sm transition-colors"
+                  placeholder={i18nService.t('wecomBotIdPlaceholder') || '您的 Bot ID'}
+                />
+                {config.wecom.botId && (
+                  <div className="absolute right-2 inset-y-0 flex items-center">
+                    <button
+                      type="button"
+                      onClick={() => { handleWecomChange('botId', ''); void imService.updateConfig({ wecom: { ...config.wecom, botId: '' } }); }}
+                      className="p-0.5 rounded text-claude-textSecondary dark:text-claude-darkTextSecondary hover:text-claude-accent transition-colors"
+                      title={i18nService.t('clear') || 'Clear'}
+                    >
+                      <XCircleIconSolid className="h-4 w-4" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Secret */}
+            <div className="space-y-1.5">
+              <label className="block text-xs font-medium dark:text-claude-darkTextSecondary text-claude-textSecondary">
+                Secret
+              </label>
+              <div className="relative">
+                <input
+                  type={showSecrets['wecom.secret'] ? 'text' : 'password'}
+                  value={config.wecom.secret}
+                  onChange={(e) => handleWecomChange('secret', e.target.value)}
+                  onBlur={handleSaveConfig}
+                  className="block w-full rounded-lg dark:bg-claude-darkSurface/80 bg-claude-surface/80 dark:border-claude-darkBorder/60 border-claude-border/60 border focus:border-claude-accent focus:ring-1 focus:ring-claude-accent/30 dark:text-claude-darkText text-claude-text px-3 py-2 pr-16 text-sm transition-colors"
+                  placeholder="••••••••••••"
+                />
+                <div className="absolute right-2 inset-y-0 flex items-center gap-1">
+                  {config.wecom.secret && (
+                    <button
+                      type="button"
+                      onClick={() => { handleWecomChange('secret', ''); void imService.updateConfig({ wecom: { ...config.wecom, secret: '' } }); }}
+                      className="p-0.5 rounded text-claude-textSecondary dark:text-claude-darkTextSecondary hover:text-claude-accent transition-colors"
+                      title={i18nService.t('clear') || 'Clear'}
+                    >
+                      <XCircleIconSolid className="h-4 w-4" />
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setShowSecrets(prev => ({ ...prev, 'wecom.secret': !prev['wecom.secret'] }))}
+                    className="p-0.5 rounded text-claude-textSecondary dark:text-claude-darkTextSecondary hover:text-claude-accent transition-colors"
+                    title={showSecrets['wecom.secret'] ? (i18nService.t('hide') || 'Hide') : (i18nService.t('show') || 'Show')}
+                  >
+                    {showSecrets['wecom.secret'] ? <EyeIcon className="h-4 w-4" /> : <EyeSlashIcon className="h-4 w-4" />}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-1">
+              {renderConnectivityTestButton('wecom')}
+            </div>
+
+            {/* Bot ID display */}
+            {status.wecom?.botId && (
+              <div className="text-xs text-green-600 dark:text-green-400 bg-green-500/10 px-3 py-2 rounded-lg">
+                Bot ID: {status.wecom.botId}
+              </div>
+            )}
+
+            {/* Error display */}
+            {status.wecom?.lastError && (
+              <div className="text-xs text-red-500 bg-red-500/10 px-3 py-2 rounded-lg">
+                {status.wecom.lastError}
               </div>
             )}
           </div>

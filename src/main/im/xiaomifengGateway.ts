@@ -971,4 +971,8 @@ export class XiaomifengGateway extends EventEmitter {
     await this.sendBeeReply(this.lastConversation.conversationId, text);
     this.status.lastOutboundAt = Date.now();
   }
+
+  async sendNotificationWithMedia(text: string): Promise<void> {
+    await this.sendNotification(text);
+  }
 }
