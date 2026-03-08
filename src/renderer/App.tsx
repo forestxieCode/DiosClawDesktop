@@ -610,23 +610,24 @@ const App: React.FC = () => {
       {toastMessage && (
         <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
       )}
-      <div className="flex flex-1 min-h-0 overflow-hidden px-2 pb-2 pt-1.5 md:px-3 md:pb-3 md:pt-2">
-        <Sidebar
-          onShowLogin={handleShowLogin}
-          onShowSettings={handleShowSettings}
-          activeView={mainView}
-          onShowSkills={handleShowSkills}
-          onShowCowork={handleShowCowork}
-          onShowScheduledTasks={handleShowScheduledTasks}
-          onOpenSearch={handleOpenSearch}
-          onShowMcp={handleShowMcp}
-          onNewChat={handleNewChat}
-          isCollapsed={isSidebarCollapsed}
-          onToggleCollapse={handleToggleSidebar}
-          updateBadge={!isSidebarCollapsed ? updateBadge : null}
-        />
-        <div className={`flex-1 min-w-0 transition-[padding] duration-200 ${isSidebarCollapsed ? 'pl-0' : 'pl-2'}`}>
-          <div className="app-main-panel h-full min-h-0 rounded-2xl dark:bg-dark-bg/95 bg-page/95 overflow-hidden animate-fade-in">
+      <div className="flex flex-1 min-h-0 overflow-hidden">
+        <div className="app-workspace-panel flex flex-1 min-h-0 min-w-0 overflow-hidden rounded-2xl animate-fade-in">
+          <Sidebar
+            onShowLogin={handleShowLogin}
+            onShowSettings={handleShowSettings}
+            activeView={mainView}
+            onShowSkills={handleShowSkills}
+            onShowCowork={handleShowCowork}
+            onShowScheduledTasks={handleShowScheduledTasks}
+            onOpenSearch={handleOpenSearch}
+            onShowMcp={handleShowMcp}
+            onNewChat={handleNewChat}
+            isCollapsed={isSidebarCollapsed}
+            onToggleCollapse={handleToggleSidebar}
+            updateBadge={!isSidebarCollapsed ? updateBadge : null}
+            isEmbedded
+          />
+          <div className="flex-1 min-h-0 min-w-0 overflow-hidden dark:bg-dark-bg/95 bg-page/95">
             {mainView === 'skills' ? (
               <SkillsView
                 isSidebarCollapsed={isSidebarCollapsed}

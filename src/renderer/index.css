@@ -139,14 +139,16 @@ body {
   background: var(--app-bg-dark);
 }
 
-.app-main-panel {
+.app-main-panel,
+.app-workspace-panel {
   border: 1px solid rgba(232, 232, 235, 0.75);
   box-shadow: 0 16px 40px rgba(13, 40, 71, 0.08), 0 3px 14px rgba(13, 40, 71, 0.06);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
 
-.dark .app-main-panel {
+.dark .app-main-panel,
+.dark .app-workspace-panel {
   border-color: rgba(42, 46, 56, 0.85);
   box-shadow: 0 20px 44px rgba(2, 8, 22, 0.5), 0 4px 16px rgba(2, 8, 22, 0.4);
 }

@@ -26,6 +26,7 @@ interface SidebarProps {
   isCollapsed: boolean;
   onToggleCollapse: () => void;
   updateBadge?: React.ReactNode;
+  isEmbedded?: boolean;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -40,6 +41,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   isCollapsed,
   onToggleCollapse,
   updateBadge,
+  isEmbedded = false,
 }) => {
   const sessions = useSelector((state: RootState) => state.cowork.sessions);
   const currentSessionId = useSelector((state: RootState) => state.cowork.currentSessionId);
@@ -119,10 +121,14 @@ const Sidebar: React.FC<SidebarProps> = ({
   const navButtonBase = 'w-full inline-flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200';
   const navButtonActive = 'bg-primary text-white shadow-subtle hover:bg-primary-light hover:shadow-card';
   const navButtonInactive = 'dark:text-dark-text-secondary text-text-secondary hover:text-text-primary dark:hover:text-dark-text hover:bg-surface-hover dark:hover:bg-dark-surface-hover';
+  const sidebarBaseClass = 'shrink-0 dark:bg-dark-surface-muted/90 bg-surface/90 flex flex-col sidebar-transition overflow-hidden';
+  const sidebarFrameClass = isEmbedded
+    ? `${isCollapsed ? 'border-r-0' : 'border-r dark:border-dark-border/70 border-border/70'}`
+    : 'border dark:border-dark-border/80 border-border/80 rounded-2xl shadow-card';
 
   return (
     <aside
-      className={`shrink-0 dark:bg-dark-surface-muted/90 bg-surface/90 border dark:border-dark-border/80 border-border/80 rounded-2xl flex flex-col sidebar-transition overflow-hidden shadow-card ${
+      className={`${sidebarBaseClass} ${sidebarFrameClass} ${
         isCollapsed ? 'w-0 -translate-x-2 opacity-0 pointer-events-none' : 'w-64 translate-x-0 opacity-100'
       }`}
     >
