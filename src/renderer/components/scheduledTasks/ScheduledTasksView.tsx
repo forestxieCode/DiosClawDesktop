@@ -88,8 +88,8 @@ const ScheduledTasksView: React.FC<ScheduledTasksViewProps> = ({
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="app-topbar">
-        <div className="app-topbar-inner !px-2 md:!px-3">
-          <div className="flex items-center space-x-3 h-8 pl-3">
+        <div className="app-topbar-inner">
+          <div className="flex items-center space-x-3 h-8">
             {isSidebarCollapsed && (
               <div className={`non-draggable flex items-center gap-1 ${isMac ? 'pl-[68px]' : ''}`}>
                 <button
