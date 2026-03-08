@@ -128,13 +128,17 @@ const Sidebar: React.FC<SidebarProps> = ({
     handleExitBatchMode();
   }, [selectedIds, handleExitBatchMode]);
 
+  const navButtonBase = 'w-full inline-flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200';
+  const navButtonActive = 'bg-primary text-white shadow-subtle hover:bg-primary-light hover:shadow-card';
+  const navButtonInactive = 'dark:text-dark-text-secondary text-text-secondary hover:text-text-primary dark:hover:text-dark-text hover:bg-surface-hover dark:hover:bg-dark-surface-hover';
+
   return (
     <aside
-      className={`shrink-0 dark:bg-dark-surface-muted bg-surface-muted flex flex-col sidebar-transition overflow-hidden ${
-        isCollapsed ? 'w-0' : 'w-60'
+      className={`shrink-0 dark:bg-dark-surface-muted/90 bg-surface/90 border dark:border-dark-border/80 border-border/80 rounded-2xl flex flex-col sidebar-transition overflow-hidden shadow-card ${
+        isCollapsed ? 'w-0 -translate-x-2 opacity-0 pointer-events-none' : 'w-64 translate-x-0 opacity-100'
       }`}
     >
-      <div className="pt-3 pb-3">
+      <div className="pt-3 pb-2">
         <div className="draggable sidebar-header-drag h-8 flex items-center justify-between px-3">
           <div className={`${isMac ? 'pl-[68px]' : ''}`}>
             {updateBadge}
@@ -142,20 +146,20 @@ const Sidebar: React.FC<SidebarProps> = ({
           <button
             type="button"
             onClick={onToggleCollapse}
-            className="non-draggable h-8 w-8 inline-flex items-center justify-center rounded-lg dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
+            className="non-draggable app-icon-btn"
             aria-label={isCollapsed ? i18nService.t('expand') : i18nService.t('collapse')}
           >
             <SidebarToggleIcon className="h-4 w-4" isCollapsed={isCollapsed} />
           </button>
         </div>
-        <div className="mt-3 space-y-1 px-3">
+        <div className="mt-3 space-y-1.5 px-3">
           <button
             type="button"
             onClick={onNewChat}
-            className={`w-full inline-flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors ${
+            className={`${navButtonBase} ${
               activeView === 'cowork'
-                ? 'bg-primary/10 text-primary hover:bg-primary/20'
-                : 'dark:text-dark-text-secondary text-text-secondary hover:text-text-primary dark:hover:text-dark-text hover:bg-surface-hover dark:hover:bg-dark-surface-hover'
+                ? navButtonActive
+                : navButtonInactive
             }`}
           >
             <ComposeIcon className="h-4 w-4" />
@@ -167,7 +171,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               onShowCowork();
               setIsSearchOpen(true);
             }}
-            className="w-full inline-flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm font-medium dark:text-dark-text-secondary text-text-secondary hover:text-text-primary dark:hover:text-dark-text hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
+            className={`${navButtonBase} ${navButtonInactive}`}
           >
             <SearchIcon className="h-4 w-4" />
             {i18nService.t('search')}
@@ -178,10 +182,10 @@ const Sidebar: React.FC<SidebarProps> = ({
               setIsSearchOpen(false);
               onShowScheduledTasks();
             }}
-            className={`w-full inline-flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors ${
+            className={`${navButtonBase} ${
               activeView === 'scheduledTasks'
-                ? 'bg-primary/10 text-primary hover:bg-primary/20'
-                : 'dark:text-dark-text-secondary text-text-secondary hover:text-text-primary dark:hover:text-dark-text hover:bg-surface-hover dark:hover:bg-dark-surface-hover'
+                ? navButtonActive
+                : navButtonInactive
             }`}
           >
             <ClockIcon className="h-4 w-4" />
@@ -193,10 +197,10 @@ const Sidebar: React.FC<SidebarProps> = ({
               setIsSearchOpen(false);
               onShowSkills();
             }}
-            className={`w-full inline-flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors ${
+            className={`${navButtonBase} ${
               activeView === 'skills'
-                ? 'bg-primary/10 text-primary hover:bg-primary/20'
-                : 'dark:text-dark-text-secondary text-text-secondary hover:text-text-primary dark:hover:text-dark-text hover:bg-surface-hover dark:hover:bg-dark-surface-hover'
+                ? navButtonActive
+                : navButtonInactive
             }`}
           >
             <PuzzleIcon className="h-4 w-4" />
@@ -208,10 +212,10 @@ const Sidebar: React.FC<SidebarProps> = ({
               setIsSearchOpen(false);
               onShowMcp();
             }}
-            className={`w-full inline-flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors ${
+            className={`${navButtonBase} ${
               activeView === 'mcp'
-                ? 'bg-primary/10 text-primary hover:bg-primary/20'
-                : 'dark:text-dark-text-secondary text-text-secondary hover:text-text-primary dark:hover:text-dark-text hover:bg-surface-hover dark:hover:bg-dark-surface-hover'
+                ? navButtonActive
+                : navButtonInactive
             }`}
           >
             <ConnectorIcon className="h-4 w-4" />
@@ -219,8 +223,9 @@ const Sidebar: React.FC<SidebarProps> = ({
           </button>
         </div>
       </div>
+      <div className="mx-3 mb-3 h-px dark:bg-dark-border bg-border-light" />
       <div className="flex-1 overflow-y-auto px-2.5 pb-4">
-        <div className="px-3 pb-2 text-sm font-medium dark:text-dark-text-secondary text-text-secondary">
+        <div className="sticky top-0 z-[1] px-3 pb-2.5 pt-1 text-xs font-semibold tracking-wide uppercase dark:text-dark-text-secondary/90 text-text-secondary/90 dark:bg-dark-surface-muted/85 bg-surface/85 backdrop-blur-sm">
           {i18nService.t('coworkHistory')}
         </div>
         <CoworkSessionList
@@ -247,7 +252,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         onRenameSession={handleRenameSession}
       />
       {isBatchMode ? (
-        <div className="px-3 pb-3 pt-1 flex items-center justify-between">
+        <div className="px-3 pb-3 pt-2 flex items-center justify-between border-t dark:border-dark-border/80 border-border/80">
           <label className="flex items-center gap-2 cursor-pointer text-sm dark:text-dark-text-secondary text-text-secondary">
             <input
               type="checkbox"
@@ -274,18 +279,18 @@ const Sidebar: React.FC<SidebarProps> = ({
             <button
               type="button"
               onClick={handleExitBatchMode}
-              className="px-3 py-1.5 text-sm font-medium rounded-lg dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
+              className="px-3 py-1.5 text-sm font-medium rounded-xl dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
             >
               {i18nService.t('batchCancel')}
             </button>
           </div>
         </div>
       ) : (
-        <div className="px-3 pb-3 pt-1">
+        <div className="px-3 pb-3 pt-2 border-t dark:border-dark-border/80 border-border/80">
           <button
             type="button"
             onClick={() => onShowSettings()}
-            className="w-full inline-flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm font-medium dark:text-dark-text-secondary text-text-secondary hover:text-text-primary dark:hover:text-dark-text hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
+            className={`${navButtonBase} ${navButtonInactive}`}
             aria-label={i18nService.t('settings')}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4"><path d="M14 17H5" /><path d="M19 7h-9" /><circle cx="17" cy="17" r="3" /><circle cx="7" cy="7" r="3" /></svg>
@@ -296,11 +301,11 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* Batch Delete Confirmation Modal */}
       {showBatchDeleteConfirm && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          className="fixed inset-0 z-50 flex items-center justify-center modal-backdrop"
           onClick={() => setShowBatchDeleteConfirm(false)}
         >
           <div
-            className="w-full max-w-sm mx-4 dark:bg-dark-surface bg-surface rounded-2xl shadow-xl overflow-hidden"
+            className="app-modal-surface w-full max-w-sm mx-4 modal-content"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-3 px-5 py-4">

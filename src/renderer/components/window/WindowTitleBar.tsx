@@ -94,7 +94,7 @@ const WindowTitleBar: React.FC<WindowTitleBarProps> = ({
       <button
         type="button"
         onClick={handleMinimize}
-        className="non-draggable h-8 w-8 inline-flex items-center justify-center rounded-lg transition-colors dark:text-dark-text-secondary text-text-secondary hover:dark:bg-dark-surface-hover hover:bg-surface-hover"
+        className="non-draggable app-icon-btn"
         aria-label="Minimize"
         title="Minimize"
       >
@@ -105,7 +105,7 @@ const WindowTitleBar: React.FC<WindowTitleBarProps> = ({
       <button
         type="button"
         onClick={handleToggleMaximize}
-        className="non-draggable h-8 w-8 inline-flex items-center justify-center rounded-lg transition-colors dark:text-dark-text-secondary text-text-secondary hover:dark:bg-dark-surface-hover hover:bg-surface-hover"
+        className="non-draggable app-icon-btn"
         aria-label={state.isMaximized ? 'Restore' : 'Maximize'}
         title={state.isMaximized ? 'Restore' : 'Maximize'}
       >
@@ -123,7 +123,7 @@ const WindowTitleBar: React.FC<WindowTitleBarProps> = ({
       <button
         type="button"
         onClick={handleClose}
-        className="non-draggable h-8 w-8 inline-flex items-center justify-center rounded-lg transition-colors dark:text-dark-text-secondary text-text-secondary hover:bg-red-500 hover:text-white dark:hover:bg-red-500"
+        className="non-draggable app-icon-btn hover:bg-red-500 hover:text-white dark:hover:bg-red-500"
         aria-label="Close"
         title="Close"
       >

@@ -286,11 +286,11 @@ const CoworkPromptInput = React.forwardRef<CoworkPromptInputRef, CoworkPromptInp
   };
 
   const containerClass = isLarge
-    ? 'relative rounded-2xl border dark:border-dark-border border-border dark:bg-dark-surface bg-surface shadow-card focus-within:shadow-elevated focus-within:ring-1 focus-within:ring-primary/40 focus-within:border-primary'
-    : 'relative flex items-end gap-2 p-3 rounded-xl border dark:border-dark-border border-border dark:bg-dark-surface bg-surface';
+    ? 'relative rounded-2xl border dark:border-dark-border/80 border-border/80 dark:bg-dark-surface/90 bg-surface/95 shadow-card transition-[box-shadow,border-color,background-color] duration-200 focus-within:shadow-elevated focus-within:ring-2 focus-within:ring-primary/25 focus-within:border-primary/70'
+    : 'relative flex items-end gap-2 p-3 rounded-xl border dark:border-dark-border/80 border-border/80 dark:bg-dark-surface/90 bg-surface/95 shadow-subtle transition-[box-shadow,border-color] duration-200 focus-within:shadow-card focus-within:border-primary/60';
 
   const textareaClass = isLarge
-    ? `w-full resize-none bg-transparent px-4 pt-2.5 pb-2 dark:text-dark-text text-text-primary placeholder:dark:text-dark-text-secondary/60 placeholder:text-text-secondary/60 focus:outline-none text-[15px] leading-6 min-h-[${minHeight}px] max-h-[${maxHeight}px]`
+    ? `w-full resize-none bg-transparent px-4 pt-3 pb-2 dark:text-dark-text text-text-primary placeholder:dark:text-dark-text-secondary/65 placeholder:text-text-secondary/65 focus:outline-none text-[15px] leading-6 min-h-[${minHeight}px] max-h-[${maxHeight}px]`
     : 'flex-1 resize-none bg-transparent dark:text-dark-text text-text-primary placeholder:dark:text-dark-text-secondary placeholder:text-text-secondary focus:outline-none text-sm leading-relaxed min-h-[24px] max-h-[200px]';
 
   const truncatePath = (path: string, maxLength = 30): string => {
@@ -546,7 +546,7 @@ const CoworkPromptInput = React.forwardRef<CoworkPromptInputRef, CoworkPromptInp
           {attachments.map((attachment) => (
               <div
                 key={attachment.path}
-                className="inline-flex items-center gap-1.5 rounded-full border dark:border-dark-border border-border dark:bg-dark-surface bg-surface px-2.5 py-1 text-xs dark:text-dark-text text-text-primary max-w-full"
+                className="inline-flex items-center gap-1.5 rounded-full border dark:border-dark-border/80 border-border/80 dark:bg-dark-surface/90 bg-surface/95 px-2.5 py-1 text-xs dark:text-dark-text text-text-primary max-w-full shadow-subtle"
                 title={attachment.path}
               >
                 {attachment.isImage ? (
@@ -576,7 +576,7 @@ const CoworkPromptInput = React.forwardRef<CoworkPromptInputRef, CoworkPromptInp
         onDrop={handleDrop}
       >
         {isDraggingFiles && (
-          <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center rounded-[inherit] bg-primary/10 text-xs font-medium text-primary">
+          <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center rounded-[inherit] bg-primary/12 backdrop-blur-[1px] text-xs font-semibold tracking-wide text-primary">
             {i18nService.t('coworkDropFileHint')}
           </div>
         )}

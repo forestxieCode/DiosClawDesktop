@@ -296,10 +296,10 @@ const CoworkSessionItem: React.FC<CoworkSessionItemProps> = ({
         }
         onSelect();
       }}
-      className={`group relative p-3 rounded-lg cursor-pointer transition-all duration-150 ${
+      className={`group relative p-3 rounded-xl border cursor-pointer transition-all duration-200 ${
         isActive
-          ? 'bg-black/[0.06] dark:bg-white/[0.08]'
-          : 'hover:bg-black/[0.04] dark:hover:bg-white/[0.05]'
+          ? 'bg-primary/10 dark:bg-primary/15 border-primary/35 shadow-subtle'
+          : 'border-transparent hover:border-border dark:hover:border-dark-border hover:bg-black/[0.03] dark:hover:bg-white/[0.04]'
       }`}
     >
       {/* Content area */}
@@ -377,7 +377,7 @@ const CoworkSessionItem: React.FC<CoworkSessionItemProps> = ({
         <button
           ref={actionButtonRef}
           onClick={openMenu}
-          className="p-1.5 rounded-lg bg-surface-muted dark:bg-dark-surface-muted dark:text-dark-text-secondary text-text-secondary dark:hover:bg-dark-surface hover:bg-surface transition-colors"
+          className="app-icon-btn-soft p-1.5 bg-surface/80 dark:bg-dark-surface/80"
           aria-label={actionLabel}
         >
           {session.pinned ? (
@@ -428,11 +428,11 @@ const CoworkSessionItem: React.FC<CoworkSessionItemProps> = ({
       {/* Delete Confirmation Modal */}
       {showConfirmDelete && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          className="fixed inset-0 z-50 flex items-center justify-center modal-backdrop"
           onClick={handleCancelDelete}
         >
           <div
-            className="w-full max-w-sm mx-4 dark:bg-dark-surface bg-surface rounded-2xl shadow-xl overflow-hidden"
+            className="app-modal-surface w-full max-w-sm mx-4 modal-content"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}

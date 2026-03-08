@@ -16,36 +16,38 @@ const McpView: React.FC<McpViewProps> = ({ isSidebarCollapsed, onToggleSidebar, 
   const isMac = window.electron.platform === 'darwin';
   return (
     <div className="flex-1 flex flex-col dark:bg-dark-bg bg-page h-full">
-      <div className="draggable flex h-12 items-center justify-between px-4 border-b dark:border-dark-border border-border shrink-0">
-        <div className="flex items-center space-x-3 h-8">
+      <div className="app-topbar">
+        <div className="app-topbar-inner">
+          <div className="flex items-center space-x-3 h-8">
           {isSidebarCollapsed && (
             <div className={`non-draggable flex items-center gap-1 ${isMac ? 'pl-[68px]' : ''}`}>
               <button
                 type="button"
                 onClick={onToggleSidebar}
-                className="h-8 w-8 inline-flex items-center justify-center rounded-lg dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
+                className="app-icon-btn"
               >
                 <SidebarToggleIcon className="h-4 w-4" isCollapsed={true} />
               </button>
               <button
                 type="button"
                 onClick={onNewChat}
-                className="h-8 w-8 inline-flex items-center justify-center rounded-lg dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
+                className="app-icon-btn"
               >
                 <ComposeIcon className="h-4 w-4" />
               </button>
               {updateBadge}
             </div>
           )}
-          <h1 className="text-lg font-semibold dark:text-dark-text text-text-primary">
+            <h1 className="app-title">
             {i18nService.t('mcpServers')}
-          </h1>
+            </h1>
+          </div>
+          <WindowTitleBar inline />
         </div>
-        <WindowTitleBar inline />
       </div>
 
-      <div className="flex-1 overflow-y-auto min-h-0 [scrollbar-gutter:stable]">
-        <div className="max-w-3xl mx-auto px-4 py-6">
+      <div className="app-view-scroll">
+        <div className="app-view-container">
           <McpManager />
         </div>
       </div>

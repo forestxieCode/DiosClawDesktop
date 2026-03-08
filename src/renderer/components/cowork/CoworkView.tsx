@@ -319,8 +319,11 @@ const CoworkView: React.FC<CoworkViewProps> = ({ onRequestAppSettings, onShowSki
   if (!isInitialized) {
     return (
       <div className="flex-1 h-full flex flex-col dark:bg-dark-bg bg-page">
-        <div className="draggable flex h-12 items-center justify-end px-4 border-b dark:border-dark-border border-border shrink-0">
-          <WindowTitleBar inline />
+        <div className="app-topbar">
+          <div className="app-topbar-inner">
+            <div />
+            <WindowTitleBar inline />
+          </div>
         </div>
         <div className="flex-1 flex items-center justify-center">
           <div className="dark:text-dark-text-secondary text-text-secondary">
@@ -353,21 +356,22 @@ const CoworkView: React.FC<CoworkViewProps> = ({ onRequestAppSettings, onShowSki
   return (
     <div className="flex-1 flex flex-col dark:bg-dark-bg bg-page h-full">
       {/* Header */}
-      <div className="draggable flex h-12 items-center justify-between px-4 border-b dark:border-dark-border border-border shrink-0">
-        <div className="non-draggable h-8 flex items-center">
+      <div className="app-topbar">
+        <div className="app-topbar-inner">
+          <div className="non-draggable h-8 flex items-center">
           {isSidebarCollapsed && (
             <div className={`flex items-center gap-1 mr-2 ${isMac ? 'pl-[68px]' : ''}`}>
               <button
                 type="button"
                 onClick={onToggleSidebar}
-                className="h-8 w-8 inline-flex items-center justify-center rounded-lg dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
+                className="app-icon-btn"
               >
                 <SidebarToggleIcon className="h-4 w-4" isCollapsed={true} />
               </button>
               <button
                 type="button"
                 onClick={onNewChat}
-                className="h-8 w-8 inline-flex items-center justify-center rounded-lg dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
+                className="app-icon-btn"
               >
                 <ComposeIcon className="h-4 w-4" />
               </button>
@@ -375,27 +379,28 @@ const CoworkView: React.FC<CoworkViewProps> = ({ onRequestAppSettings, onShowSki
             </div>
           )}
           <ModelSelector />
+          </div>
+          <WindowTitleBar inline />
         </div>
-        <WindowTitleBar inline />
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-y-auto min-h-0">
-        <div className="max-w-3xl mx-auto px-4 py-16 space-y-12">
+      <div className="flex-1 overflow-y-auto min-h-0 scroll-smooth">
+        <div className="max-w-4xl mx-auto px-4 py-12 md:py-14 space-y-10 animate-fade-in-up">
           {/* Welcome Section */}
-          <div className="text-center space-y-5">
-            <img src="logo.png" alt="logo" className="w-16 h-16 mx-auto" />
-            <h2 className="text-3xl font-bold tracking-tight dark:text-dark-text text-text-primary">
+          <div className="text-center space-y-5 rounded-3xl border dark:border-dark-border/70 border-border/70 dark:bg-dark-surface/35 bg-surface/70 px-6 py-10 shadow-subtle">
+            <img src="logo.png" alt="logo" className="w-16 h-16 mx-auto drop-shadow-sm" />
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight dark:text-dark-text text-text-primary">
               {i18nService.t('coworkWelcome')}
             </h2>
-            <p className="text-sm dark:text-dark-text-secondary text-text-secondary max-w-md mx-auto">
+            <p className="text-sm md:text-[15px] dark:text-dark-text-secondary text-text-secondary max-w-xl mx-auto leading-relaxed">
               {i18nService.t('coworkDescription')}
             </p>
           </div>
 
           {/* Prompt Input Area - Large version with folder selector */}
           <div className="space-y-3">
-            <div className="shadow-glow-accent rounded-2xl">
+            <div className="rounded-2xl">
               <CoworkPromptInput
                 ref={promptInputRef}
                 onSubmit={handleStartSession}
@@ -414,7 +419,7 @@ const CoworkView: React.FC<CoworkViewProps> = ({ onRequestAppSettings, onShowSki
           </div>
 
           {/* Quick Actions */}
-          <div className="space-y-4">
+          <div className="space-y-4 rounded-2xl border dark:border-dark-border/60 border-border/70 dark:bg-dark-surface/30 bg-surface/60 p-4 md:p-5">
             {selectedAction ? (
               <PromptPanel
                 action={selectedAction}

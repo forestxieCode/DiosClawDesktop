@@ -15,15 +15,12 @@ const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = ({
 }) => {
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center"
+      className="fixed inset-0 z-[9999] flex items-center justify-center modal-backdrop"
       onClick={onCancel}
     >
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/40 dark:bg-black/60" />
-
       {/* Modal */}
       <div
-        className="relative w-80 rounded-xl shadow-2xl dark:bg-dark-surface bg-white border dark:border-dark-border border-border p-5"
+        className="app-modal-surface relative w-80 p-5 modal-content"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-col items-center text-center">
@@ -40,7 +37,7 @@ const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = ({
             <button
               type="button"
               onClick={onCancel}
-              className="flex-1 px-4 py-2 text-sm rounded-lg dark:text-dark-text text-text-primary border dark:border-dark-border border-border hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
+              className="app-secondary-btn flex-1 px-4 py-2 text-sm"
             >
               {i18nService.t('cancel')}
             </button>

@@ -533,7 +533,7 @@ const App: React.FC = () => {
 
   if (!isInitialized) {
     return (
-      <div className="h-screen overflow-hidden flex flex-col">
+      <div className="app-shell h-screen overflow-hidden flex flex-col">
         {windowsStandaloneTitleBar}
         <div className="flex-1 flex items-center justify-center dark:bg-dark-bg bg-page">
           <div className="flex flex-col items-center space-y-4">
@@ -552,7 +552,7 @@ const App: React.FC = () => {
 
   if (initError) {
     return (
-      <div className="h-screen overflow-hidden flex flex-col">
+      <div className="app-shell h-screen overflow-hidden flex flex-col">
         {windowsStandaloneTitleBar}
         <div className="flex-1 flex flex-col items-center justify-center dark:bg-dark-bg bg-page">
           <div className="flex flex-col items-center space-y-6 max-w-md px-6">
@@ -581,11 +581,11 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col dark:bg-dark-surface-muted bg-surface-muted">
+    <div className="app-shell h-screen overflow-hidden flex flex-col">
       {toastMessage && (
         <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
       )}
-      <div className="flex flex-1 min-h-0 overflow-hidden">
+      <div className="flex flex-1 min-h-0 overflow-hidden px-2 pb-2 pt-1.5 md:px-3 md:pb-3 md:pt-2">
         <Sidebar
           onShowLogin={handleShowLogin}
           onShowSettings={handleShowSettings}
@@ -599,8 +599,8 @@ const App: React.FC = () => {
           onToggleCollapse={handleToggleSidebar}
           updateBadge={!isSidebarCollapsed ? updateBadge : null}
         />
-        <div className={`flex-1 min-w-0 py-1.5 pr-1.5 ${isSidebarCollapsed ? 'pl-1.5' : ''}`}>
-          <div className="h-full min-h-0 rounded-xl dark:bg-dark-bg bg-page overflow-hidden">
+        <div className={`flex-1 min-w-0 transition-[padding] duration-200 ${isSidebarCollapsed ? 'pl-0' : 'pl-2'}`}>
+          <div className="app-main-panel h-full min-h-0 rounded-2xl dark:bg-dark-bg/95 bg-page/95 overflow-hidden animate-fade-in">
             {mainView === 'skills' ? (
               <SkillsView
                 isSidebarCollapsed={isSidebarCollapsed}

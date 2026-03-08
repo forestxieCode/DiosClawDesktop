@@ -81,21 +81,22 @@ const ScheduledTasksView: React.FC<ScheduledTasksViewProps> = ({
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="draggable flex h-12 items-center justify-between px-4 border-b dark:border-dark-border border-border shrink-0">
-        <div className="flex items-center space-x-3 h-8">
+      <div className="app-topbar">
+        <div className="app-topbar-inner">
+          <div className="flex items-center space-x-3 h-8">
           {isSidebarCollapsed && (
             <div className={`non-draggable flex items-center gap-1 ${isMac ? 'pl-[68px]' : ''}`}>
               <button
                 type="button"
                 onClick={onToggleSidebar}
-                className="h-8 w-8 inline-flex items-center justify-center rounded-lg dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
+                className="app-icon-btn"
               >
                 <SidebarToggleIcon className="h-4 w-4" isCollapsed={true} />
               </button>
               <button
                 type="button"
                 onClick={onNewChat}
-                className="h-8 w-8 inline-flex items-center justify-center rounded-lg dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
+                className="app-icon-btn"
               >
                 <ComposeIcon className="h-4 w-4" />
               </button>
@@ -105,57 +106,52 @@ const ScheduledTasksView: React.FC<ScheduledTasksViewProps> = ({
           {viewMode !== 'list' && (
             <button
               onClick={handleBackToList}
-              className="non-draggable p-2 rounded-lg dark:hover:bg-dark-surface-hover hover:bg-surface-hover dark:text-dark-text-secondary text-text-secondary transition-colors"
+              className="non-draggable app-icon-btn-soft h-9 w-9"
               aria-label={i18nService.t('back')}
             >
               <ArrowLeftIcon className="h-5 w-5" />
             </button>
           )}
-          <h1 className="text-lg font-semibold dark:text-dark-text text-text-primary">
+            <h1 className="app-title">
             {i18nService.t('scheduledTasksTitle')}
-          </h1>
+            </h1>
+          </div>
+          <WindowTitleBar inline />
         </div>
-        <WindowTitleBar inline />
       </div>
 
       {/* Tabs + New Task button */}
       {showTabs && (
-        <div className="flex items-center justify-between border-b dark:border-dark-border border-border px-4 shrink-0">
+        <div className="app-tabs-bar">
           <div className="flex">
             <button
               type="button"
               onClick={() => handleTabChange('tasks')}
-              className={`px-4 py-2.5 text-sm font-medium transition-colors relative ${
+              className={`app-tab ${
                 activeTab === 'tasks'
-                  ? 'dark:text-dark-text text-text-primary'
-                  : 'dark:text-dark-text-secondary text-text-secondary hover:dark:text-dark-text hover:text-text-primary'
+                  ? 'app-tab-active'
+                  : 'app-tab-inactive'
               }`}
             >
               {i18nService.t('scheduledTasksTabTasks')}
-              {activeTab === 'tasks' && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t" />
-              )}
             </button>
             <button
               type="button"
               onClick={() => handleTabChange('history')}
-              className={`px-4 py-2.5 text-sm font-medium transition-colors relative ${
+              className={`app-tab ${
                 activeTab === 'history'
-                  ? 'dark:text-dark-text text-text-primary'
-                  : 'dark:text-dark-text-secondary text-text-secondary hover:dark:text-dark-text hover:text-text-primary'
+                  ? 'app-tab-active'
+                  : 'app-tab-inactive'
               }`}
             >
               {i18nService.t('scheduledTasksTabHistory')}
-              {activeTab === 'history' && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t" />
-              )}
             </button>
           </div>
           {activeTab === 'tasks' && (
             <button
               type="button"
               onClick={() => dispatch(setViewMode('create'))}
-              className="px-3 py-1 text-sm font-medium bg-primary text-white rounded-lg hover:bg-primary-light transition-colors"
+              className="app-primary-btn px-3 py-1 text-sm"
             >
               {i18nService.t('scheduledTasksNewTask')}
             </button>
@@ -164,7 +160,7 @@ const ScheduledTasksView: React.FC<ScheduledTasksViewProps> = ({
       )}
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="app-view-scroll">
         {showTabs && activeTab === 'history' ? (
           <AllRunsHistory />
         ) : (

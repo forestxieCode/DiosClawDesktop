@@ -811,15 +811,15 @@ const UserMessageItem: React.FC<{ message: CoworkMessage; skills: Skill[] }> = R
 
   return (
     <div
-      className="py-2 px-4"
+      className="py-2.5 px-4"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="pl-4 sm:pl-8 md:pl-12">
           <div className="flex items-start gap-3 flex-row-reverse">
             <div className="w-full min-w-0 flex flex-col items-end">
-              <div className="w-fit max-w-[42rem] rounded-2xl px-4 py-2.5 dark:bg-dark-surface bg-surface dark:text-dark-text text-text-primary shadow-subtle">
+              <div className="w-fit max-w-[42rem] rounded-2xl border dark:border-dark-border/70 border-border/70 px-4 py-2.5 dark:bg-dark-surface/92 bg-surface/96 dark:text-dark-text text-text-primary shadow-subtle">
                 {message.content?.trim() && (
                   <MarkdownContent
                     content={message.content}
@@ -955,7 +955,7 @@ const StreamingActivityBar: React.FC<{ messages: CoworkMessage[] }> = ({ message
   };
 
   return (
-    <div className="shrink-0 animate-fade-in px-4">
+    <div className="shrink-0 animate-fade-in px-4 pb-1">
       <div className="max-w-3xl mx-auto">
         <div className="streaming-bar" />
         <div className="py-1">
@@ -1090,10 +1090,10 @@ const AssistantTurnBlock: React.FC<{
   };
 
   return (
-    <div className="px-4 py-2">
-      <div className="max-w-3xl mx-auto">
+    <div className="px-4 py-2.5">
+      <div className="max-w-4xl mx-auto">
         <div className="flex items-start gap-3">
-          <div className="flex-1 min-w-0 px-4 py-3 space-y-3">
+          <div className="flex-1 min-w-0 px-4 py-3.5 space-y-3 rounded-2xl border dark:border-dark-border/60 border-border/65 dark:bg-dark-surface/28 bg-surface/56 shadow-subtle">
             {visibleAssistantItems.map((item, index) => {
               if (item.type === 'assistant') {
                 if (item.message.metadata?.isThinking) {
@@ -1651,7 +1651,8 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
   return (
     <div ref={detailRootRef} className="flex-1 flex flex-col dark:bg-dark-bg bg-page h-full">
       {/* Header */}
-      <div className="draggable flex h-12 items-center justify-between px-4 border-b dark:border-dark-border border-border dark:bg-dark-surface/50 bg-surface/50 shrink-0">
+      <div className="app-topbar">
+        <div className="app-topbar-inner">
         {/* Left side: Toggle buttons (when collapsed) + Title + Sandbox badge */}
         <div className="flex h-full items-center gap-2 min-w-0">
           {isSidebarCollapsed && (
@@ -1659,14 +1660,14 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
               <button
                 type="button"
                 onClick={onToggleSidebar}
-                className="h-8 w-8 inline-flex items-center justify-center rounded-lg dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
+                className="app-icon-btn"
               >
                 <SidebarToggleIcon className="h-4 w-4" isCollapsed={true} />
               </button>
               <button
                 type="button"
                 onClick={onNewChat}
-                className="h-8 w-8 inline-flex items-center justify-center rounded-lg dark:text-dark-text-secondary text-text-secondary hover:bg-surface-hover dark:hover:bg-dark-surface-hover transition-colors"
+                className="app-icon-btn"
               >
                 <ComposeIcon className="h-4 w-4" />
               </button>
@@ -1727,12 +1728,13 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
             ref={actionButtonRef}
             type="button"
             onClick={openMenu}
-            className="p-1.5 rounded-lg dark:text-dark-text-secondary text-text-secondary dark:hover:bg-dark-surface-hover hover:bg-surface-hover transition-colors"
+            className="app-icon-btn-soft p-1.5"
             aria-label={i18nService.t('coworkSessionActions')}
           >
             <EllipsisHorizontalIcon className="h-5 w-5" />
           </button>
           <WindowTitleBar inline className="ml-1" />
+        </div>
         </div>
       </div>
 
@@ -1833,7 +1835,7 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
       <div
         ref={scrollContainerRef}
         onScroll={handleMessagesScroll}
-        className="flex-1 overflow-y-auto min-h-0 pt-3"
+        className="flex-1 overflow-y-auto min-h-0 pt-3 scroll-smooth"
       >
         {renderConversationTurns()}
         <div className="h-20" />
@@ -1843,7 +1845,7 @@ const CoworkSessionDetail: React.FC<CoworkSessionDetailProps> = ({
       {isStreaming && <StreamingActivityBar messages={currentSession.messages} />}
 
       {/* Input Area */}
-      <div className="p-4 shrink-0">
+      <div className="p-4 shrink-0 border-t dark:border-dark-border/70 border-border/70 dark:bg-dark-surface/38 bg-surface/70 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto">
           <CoworkPromptInput
             onSubmit={onContinue}
